@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home Class Directory - Study Notes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1e1e24", 
+                        "background-light": "#fcf7f4", // Warm off-white from image
+                        "background-dark": "#18181b",  // Dark zinc for dark mode
+                        "card-light": "#f4ede8",       // Slightly darker beige for sidebar/cards
+                        "card-dark": "#27272a",        // Lighter zinc for dark mode components
+                        "accent-pink": "#f3d1d1",
+                        "accent-orange": "#ffe6cc",
+                        "accent-purple": "#e0d9fc",
+                        "accent-green": "#d1f5e8",
+                        "accent-blue": "#dbeafe",
+                    },
+                    fontFamily: {
+                        display: ["Outfit", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1.5rem",
+                        'xl': "1rem",
+                        '2xl': "1.5rem",
+                        '3xl': "2rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Outfit', sans-serif;
+        }::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 h-screen overflow-hidden transition-colors duration-300">
+<div class="flex h-full p-4 gap-4">
+<aside class="w-24 flex-shrink-0 flex flex-col items-center py-8 bg-card-light dark:bg-card-dark rounded-3xl h-full shadow-sm transition-colors duration-300">
+<div class="mb-10">
+<div class="w-12 h-12 bg-primary dark:bg-white text-white dark:text-primary rounded-xl flex items-center justify-center transform rotate-3">
+<span class="material-icons-round text-3xl">school</span>
+</div>
+</div>
+<nav class="flex-1 flex flex-col items-center gap-6 w-full">
+<a class="w-12 h-12 flex items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-gray-300 dark:shadow-none transition-transform hover:scale-105" href="#">
+<span class="material-icons-round">home</span>
+</a>
+<a class="w-12 h-12 flex items-center justify-center rounded-2xl text-gray-500 hover:bg-white dark:hover:bg-gray-700 hover:text-primary dark:hover:text-white transition-all group" href="#">
+<span class="material-icons-round group-hover:scale-110 transition-transform">library_books</span>
+</a>
+<a class="w-12 h-12 flex items-center justify-center rounded-2xl text-gray-500 hover:bg-white dark:hover:bg-gray-700 hover:text-primary dark:hover:text-white transition-all group relative" href="#">
+<span class="absolute top-3 right-3 w-2 h-2 bg-red-400 rounded-full"></span>
+<span class="material-icons-round group-hover:scale-110 transition-transform">shopping_bag</span>
+</a>
+<a class="w-12 h-12 flex items-center justify-center rounded-2xl text-gray-500 hover:bg-white dark:hover:bg-gray-700 hover:text-primary dark:hover:text-white transition-all group" href="#">
+<span class="material-icons-round group-hover:scale-110 transition-transform">leaderboard</span>
+</a>
+<a class="w-12 h-12 flex items-center justify-center rounded-2xl text-gray-500 hover:bg-white dark:hover:bg-gray-700 hover:text-primary dark:hover:text-white transition-all group" href="#">
+<span class="material-icons-round group-hover:scale-110 transition-transform">settings</span>
+</a>
+</nav>
+<div class="mt-auto relative group cursor-pointer">
+<img alt="User Profile" class="w-12 h-12 rounded-2xl object-cover border-2 border-white dark:border-gray-600" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDzUVvnqwyj0NuCyzOsxEBCj6zKXpcYIcxmm3ikTmdPkZ0gbBL6v78b690yukG8jlhj13xHMWQYRWO1L--WSBsPxD9EvoKq8djBBAXRyqNKBk99QWUQ6HjXFwh2T2X45Tu1XbhohztSNkBdO3q_KZdjqYmxDLn1UiQJT-BCuaqp7JrGqed7xFTlW6SvxkTikNAdMYkQa_pgYiuFmE06E5Ax4PUzBzIAMo-Ca-qTcplQ0ZFVZc5s_te2KnVuanmHbn2ghG3uV-cQ-NM"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white dark:border-card-dark rounded-full"></div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full overflow-hidden rounded-3xl bg-white dark:bg-[#202023] shadow-sm relative transition-colors duration-300">
+<header class="flex items-center justify-between px-8 py-6 flex-shrink-0">
+<div class="flex items-center gap-4 w-full max-w-2xl">
+<div class="relative w-full">
+<span class="absolute left-4 top-1/2 transform -translate-y-1/2 material-icons-round text-gray-400">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-gray-50 dark:bg-card-dark rounded-2xl border-none focus:ring-2 focus:ring-primary/20 text-gray-700 dark:text-gray-200 placeholder-gray-400 transition-shadow" placeholder="Search for notes, topics, or teachers..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-50 dark:bg-card-dark text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+<span class="material-icons-round">notifications_none</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-50 dark:bg-card-dark text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-round">dark_mode</span>
+</button>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto px-8 pb-8">
+<div class="mb-10">
+<h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">Invest in your <br/> <span class="text-gray-400 dark:text-gray-500">future success</span></h1>
+<p class="text-gray-500 dark:text-gray-400 mt-4 text-lg">Select your class to browse curated study materials.</p>
+</div>
+<div class="flex gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl shadow-lg shadow-primary/20 whitespace-nowrap">
+<span class="material-icons-round text-lg">grid_view</span>
+<span class="font-medium">All Classes</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-card-dark border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors whitespace-nowrap">
+<span class="material-icons-round text-lg text-orange-400">science</span>
+<span class="font-medium">Science Stream</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-card-dark border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors whitespace-nowrap">
+<span class="material-icons-round text-lg text-blue-400">calculate</span>
+<span class="font-medium">Commerce Stream</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-card-dark border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors whitespace-nowrap">
+<span class="material-icons-round text-lg text-purple-400">history_edu</span>
+<span class="font-medium">Arts Stream</span>
+</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+<div class="group relative overflow-hidden rounded-3xl bg-accent-pink dark:bg-[#3f2e3e] p-6 transition-transform hover:-translate-y-1 duration-300 cursor-pointer h-64 flex flex-col justify-between">
+<div class="absolute top-0 right-0 p-8 opacity-10 dark:opacity-5 transform rotate-12 scale-150">
+<span class="material-icons-round text-9xl text-gray-900 dark:text-white">school</span>
+</div>
+<div class="flex justify-between items-start z-10">
+<div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm text-pink-500">
+<span class="material-icons-round text-2xl">menu_book</span>
+</div>
+<span class="bg-white/60 dark:bg-black/20 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-gray-800 dark:text-white flex items-center gap-1">
+<span class="material-icons-round text-xs text-yellow-500">star</span> 4.8
+                            </span>
+</div>
+<div class="z-10 mt-auto">
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Class 10</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-2">Complete study notes for Board preparation including Math, Science, and Social Studies.</p>
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-gray-600 dark:text-gray-400">12,450 Students</span>
+<div class="flex -space-x-2">
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGTzCD82WD538HVqU17MhUSIr3H3zn1u_reeNw4To1LNYrYO0oCkCJOlavlfqwNWvCqvz-2rchfEtp22Rh3zqEuLKVrdjcW9w0OvQTJeXOXd2w1vdOMY6s-r3Mof699MxeifSACdqxUqWOjXlO3cGvC6-9FXgJtM73bX_eaL4_O6a8wn_IdwJGr7E3GBOn_26CaYmXCAr9gxO_diDj3DtMik9iOBBCk_YgxNpk-OSdiie_usbziSrAB31fV1-t01_WePzSSX58sUsX"/>
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8Oz5dXywBAbTtFfiMNkjXtaoJBuH9emDgq_UqGoY3IiRDzsEN8lqKwc2Nqb1vaT7yo7lSpfhNdVymezp4Ac-ERI5E1OjLfPHNXI7MrI27e2b95iXDLE0oVlEqTS4FcHHDnrtmy6bLsVspxtByunuuoav56ZPsx6grjBld2oaSPKXjqM5lP4aRr-mf2N2wdi8Gleqv2lBlc2V8W3hzG9e5938GMlKzLKnctlLSC_ZgBmD2jc_XabcvHA5wx3mODHRWE3duOY5cwu9j"/>
+<div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700 bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-white">+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-3xl bg-accent-orange dark:bg-[#3f352e] p-6 transition-transform hover:-translate-y-1 duration-300 cursor-pointer h-64 flex flex-col justify-between">
+<div class="absolute top-0 right-0 p-8 opacity-10 dark:opacity-5 transform rotate-12 scale-150">
+<span class="material-icons-round text-9xl text-gray-900 dark:text-white">science</span>
+</div>
+<div class="flex justify-between items-start z-10">
+<div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm text-orange-500">
+<span class="material-icons-round text-2xl">biotech</span>
+</div>
+<span class="bg-white/60 dark:bg-black/20 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-gray-800 dark:text-white flex items-center gap-1">
+<span class="material-icons-round text-xs text-yellow-500">star</span> 4.9
+                            </span>
+</div>
+<div class="z-10 mt-auto">
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Class 11</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-2">Foundation courses for Physics, Chemistry, and Biology tailored for medical &amp; engineering aspirants.</p>
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-gray-600 dark:text-gray-400">8,200 Students</span>
+<div class="flex -space-x-2">
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJq1fAqJ3JE8OYMtDKHLM4s3QrrxVIVspM8Eu46SnLpbx6TC26ZChmGiwYco52jltEAgYvP2QdXei2JULl25ulk3hZJ_fbjm3-FTSsSWkStOfDKtcjdcUs54xCljROJb1HGyz45af41rnl0o72m6tfqWYabiZcjUIpX6NDzclQp03e2_zuc1IOBcLokTxSdXrhGKUhHJVUt07_G4InPxhR3y6gHHGztavDYvhaRcYxe1S_MmMypFejomdOBnWo7vffKKKQjXMfmDLb"/>
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5YSH22LHbAb8n1vW2S0B21N_T_71l9wcjnpQNWqtYaiPNGIGxHGyRn3xAeZLKHItQAyk9YcNiT5O9Z3_iiagUGl_IfBXh7x5eZXPocV9hr5HyaQiNpXM_t4_h5svyzWckwD_pLw2RduNys9b5HgcNanJzS3LZPH5lqXdSMtwx6TS_CpKmmoJaU7Y3zzZjvdCSXTDuz5JCzvyWM9U9CzweSSvTs0ey3ZF-fN-glqU6dO75hYeiik8ogWLxWvRZ2WIAZM5Hxg1am9NA"/>
+<div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700 bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-white">+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-3xl bg-accent-purple dark:bg-[#342e47] p-6 transition-transform hover:-translate-y-1 duration-300 cursor-pointer h-64 flex flex-col justify-between">
+<div class="absolute top-0 right-0 p-8 opacity-10 dark:opacity-5 transform rotate-12 scale-150">
+<span class="material-icons-round text-9xl text-gray-900 dark:text-white">emoji_events</span>
+</div>
+<div class="flex justify-between items-start z-10">
+<div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm text-purple-500">
+<span class="material-icons-round text-2xl">auto_stories</span>
+</div>
+<span class="bg-white/60 dark:bg-black/20 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-gray-800 dark:text-white flex items-center gap-1">
+<span class="material-icons-round text-xs text-yellow-500">star</span> 5.0
+                            </span>
+</div>
+<div class="z-10 mt-auto">
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Class 12</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-2">Advanced study guides for final Board exams and competitive entrance test prep.</p>
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-gray-600 dark:text-gray-400">15,900 Students</span>
+<div class="flex -space-x-2">
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo1lSA8ymUrUirVAwjYVQxMpvSiod12uhd7LIHm4x-VZ0_YUz3J_J_LiR4ffglKRJlIGI-vjtVvO-NO44dkl67GpRcrhngotUppH2C4AER-cNeLGnL2MabQkUwxvscsP2jSsgDjTgyuMnC4XE-n-iEA7P6AQdix4eYYNs65YChGJbQ5IFMlHGXq9rVyRtgUvmFI7iYPVTcX8q_mgB5qeYEr45qekDc98UaRS_YWcjj0CmBchmtc6vZVbH0FQ7szTV8DHj5HQ060_NO"/>
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA40oIQkWSi_NwwnKLa6sH04ENQj0YFLnyTx24Tmjl239dwXW7-o6nSeW0dHAZiCsy8mWd0F513nyWvyafBBIXUlcWcwpUQGFARV_P-N2KaLQTaiQLaXxqW1xF1ukHuBr9I8uNHs1uiwd8igFWpqft5E7eRevKrD7WzYh5jJZrJJN2yLFOOlCD_MEZnXr0CfFztX_yWg6JFBEyNtcXqn6WJSF6obIsfRZNwyBI81KJyQyYkB26SbWU4gh_RK5Zutkl5viz8yrXx6iA4"/>
+<div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700 bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-white">+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-3xl bg-accent-green dark:bg-[#2e423a] p-6 transition-transform hover:-translate-y-1 duration-300 cursor-pointer h-64 flex flex-col justify-between lg:col-span-2">
+<div class="absolute top-0 right-0 p-8 opacity-10 dark:opacity-5 transform rotate-12 scale-150">
+<span class="material-icons-round text-9xl text-gray-900 dark:text-white">code</span>
+</div>
+<div class="flex justify-between items-start z-10">
+<div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm text-green-600">
+<span class="material-icons-round text-2xl">computer</span>
+</div>
+<span class="bg-white/60 dark:bg-black/20 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-gray-800 dark:text-white flex items-center gap-1">
+<span class="material-icons-round text-xs text-yellow-500">star</span> 4.7
+                            </span>
+</div>
+<div class="z-10 mt-auto max-w-lg">
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Computer Science &amp; Coding</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4">Learn Python, Java, C++, and Web Development. Practical projects included.</p>
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-gray-600 dark:text-gray-400">5,432 Students</span>
+<div class="flex -space-x-2">
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0FkeZNJGLK1NrTShb5JXHL3Hq2eJaXdANzCU4xDnP0cSdo4ejOJQlnqdH7PCcKvlX3v8NYTYwU218CoKyKpjfV67-oKMtj9rky_Ld-PO92d4JGujnIZPzwKWqS0tDz9hVNbL0tYe4dfPwUKJ5PENIkVX4hYBTP4f7rJYE4Ld30fTEWtv-KMeKWXzrRftEQZi9IhPCi7HuIaImXjNi-KmhZmMOo24uDPfeS0rm-kY7z9MtD3JcIwWSzbd_ovJYxpS9pc4HKaVfId4m"/>
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO0CWO2qd7PAn1MKVroPp5G1JdGuLkcmQVmrkhsaa9xo4pyGo9_ZStNs0pJvLt0Ek114De-InnQTj_biOJbeqG9obvU83trI0tHUc9dpwWPYCBNIibsNRsu_CZhvwsvH4FAlRo6TIF_xqqPl94gmUWoqcs2P8TicKaA2QbN0IbX1CJvH1Kno9svk14Ywgx9b8tcFuvfYiRS106NCh5Hp0TlHc0Z0j3xEmGG53OEvDKlAZkLWrs_1p8NnXZrcy8TGAssV8IHzb08vTs"/>
+<div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700 bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-white">+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-3xl bg-accent-blue dark:bg-[#2b3a4f] p-6 transition-transform hover:-translate-y-1 duration-300 cursor-pointer h-64 flex flex-col justify-between">
+<div class="absolute top-0 right-0 p-8 opacity-10 dark:opacity-5 transform rotate-12 scale-150">
+<span class="material-icons-round text-9xl text-gray-900 dark:text-white">trending_up</span>
+</div>
+<div class="flex justify-between items-start z-10">
+<div class="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm text-blue-500">
+<span class="material-icons-round text-2xl">analytics</span>
+</div>
+<span class="bg-white/60 dark:bg-black/20 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-gray-800 dark:text-white flex items-center gap-1">
+<span class="material-icons-round text-xs text-yellow-500">star</span> 4.6
+                            </span>
+</div>
+<div class="z-10 mt-auto">
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">Economics</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4">Micro &amp; Macro economics fundamentals.</p>
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-gray-600 dark:text-gray-400">3,120 Students</span>
+<div class="flex -space-x-2">
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUK96iN0Cr4OG8nrXykKMPtmDedwTZX9oBWCoEpA5iR4tqb3GoFOoZw705FIf9yNaeI2OxHM33fJDPueBBtZ7_DahvsOZ_wx1z1eX34Cn18AgAf_Xl6iQYsS_DD5w_9HrK1z4Z6p6iBiQOkfXCK_D1MOToZpqD4yOzfQTe7zyq1povCg1x6PE6m6bsVKmE1T7qPy2lN_Ilc91vb0QFxQnN1zSInNjJS0Jsn0IkWKlFfbnvUQRiqCOmcJ73Ia5rLm-QoLKX6ZRN_NRx"/>
+<img alt="student" class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB4oh7gMNZLMS_lKomV40EqZdEv_WIuCJzhs8GDcOoQVp3EBMLaRpQ-pZ_ui-bX6nFfNqkj785HPm6FiGQ5uNt-SodKP6n4i_a2Vm6Dw-bPsySgwtBH3i8tmUB_zq8szBUjaT89mCYwyfAn5I39LsCk7oZQ2QQqPaEDFYuqxs9kWivsBwJmfDTQB7W7OhmMEBUaJ8eo8F40-vDDJ19OOmCez-jzTL5RWDR2bjfDfriH2tA6eo2jNgCtttppfPh4KYSMb5BREnVHagq"/>
+<div class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-700 bg-black/10 dark:bg-white/10 flex items-center justify-center text-xs font-bold text-gray-700 dark:text-white">+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mb-8">
+<h2 class="text-lg font-bold text-gray-700 dark:text-gray-200 mb-4">Featured Resources</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-gray-50 dark:bg-card-dark p-4 rounded-2xl flex items-center gap-4 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+<div class="w-16 h-16 rounded-xl bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-yellow-600 dark:text-yellow-400">
+<span class="material-icons-round text-3xl">lightbulb</span>
+</div>
+<div>
+<h4 class="font-bold text-gray-800 dark:text-white">Exam Tips &amp; Tricks</h4>
+<p class="text-sm text-gray-500 dark:text-gray-400">Boost your memory with these proven techniques.</p>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-card-dark p-4 rounded-2xl flex items-center gap-4 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+<div class="w-16 h-16 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400">
+<span class="material-icons-round text-3xl">picture_as_pdf</span>
+</div>
+<div>
+<h4 class="font-bold text-gray-800 dark:text-white">Previous Year Papers</h4>
+<p class="text-sm text-gray-500 dark:text-gray-400">Download last 10 years solved question papers.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<aside class="w-80 hidden xl:flex flex-col bg-card-light dark:bg-card-dark rounded-3xl p-6 h-full transition-colors duration-300">
+<div class="flex items-center justify-between mb-8">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+<span class="material-icons-round">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+<span class="material-icons-round">settings</span>
+</button>
+</div>
+<div class="flex flex-col items-center mb-8">
+<div class="relative w-24 h-24 mb-4">
+<img alt="Annette Black" class="w-full h-full rounded-full object-cover border-4 border-white dark:border-gray-600 shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4qAEVm-5GkG16_gxuXYuDx0hryS8SwKoUcj5dRErJp23PciAaPqAszEfReo1n0OvsmfXy22dZ0cSeYonblHlszBy1gTMGCcbqDSOOcT6cMQZJWnq3W52IkFQJFVS2d2LuNbjG3fJ7pXoQS_67_YZx4Q0MtSkn5KjRY6gRl7tMZurQjI8BcSn9PwxnDHjTVa71dhN0dgZkFMBhPtCd_bZrdSCTNQOeXASJ9Ehb369p9kkIV_AYaBQd11ZPh3eERaBH3-On2qsyeP_6"/>
+<div class="absolute bottom-1 right-1 w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center border-2 border-white dark:border-card-dark">
+<span class="material-icons-round text-xs">edit</span>
+</div>
+</div>
+<h2 class="text-xl font-bold text-gray-900 dark:text-white">Annette Black</h2>
+<p class="text-gray-500 dark:text-gray-400 text-sm">Class 12 • Science</p>
+</div>
+<div class="bg-white dark:bg-[#1e1e24] p-5 rounded-3xl shadow-sm mb-6">
+<div class="flex items-center justify-between mb-4">
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Weekly Activity</p>
+<h3 class="text-2xl font-bold text-gray-800 dark:text-white">14.5h <span class="text-xs font-normal bg-orange-100 text-orange-600 px-2 py-0.5 rounded-full ml-1">🔥 Great!</span></h3>
+</div>
+<select class="text-xs border-none bg-transparent text-gray-500 dark:text-gray-400 focus:ring-0 cursor-pointer">
+<option>Week</option>
+<option>Month</option>
+</select>
+</div>
+<div class="flex items-end justify-between h-24 gap-2">
+<div class="flex flex-col items-center gap-2 w-full">
+<div class="w-full bg-accent-pink h-[40%] rounded-t-lg opacity-50"></div>
+<span class="text-[10px] text-gray-400">Mon</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full">
+<div class="w-full bg-accent-orange h-[60%] rounded-t-lg opacity-50"></div>
+<span class="text-[10px] text-gray-400">Tue</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full">
+<div class="w-full bg-accent-green h-[30%] rounded-t-lg opacity-50"></div>
+<span class="text-[10px] text-gray-400">Wed</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full">
+<div class="w-full bg-accent-purple h-[50%] rounded-t-lg opacity-50"></div>
+<span class="text-[10px] text-gray-400">Thu</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full">
+<div class="w-full bg-accent-blue h-[75%] rounded-t-lg opacity-50"></div>
+<span class="text-[10px] text-gray-400">Fri</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full">
+<div class="w-full bg-primary dark:bg-white h-[90%] rounded-lg"></div>
+<span class="text-[10px] font-bold text-gray-800 dark:text-white">Sat</span>
+</div>
+<div class="flex flex-col items-center gap-2 w-full">
+<div class="w-full bg-gray-200 dark:bg-gray-700 h-[20%] rounded-t-lg"></div>
+<span class="text-[10px] text-gray-400">Sun</span>
+</div>
+</div>
+</div>
+<h3 class="font-bold text-gray-800 dark:text-white mb-4">My Courses</h3>
+<div class="flex flex-col gap-4 overflow-y-auto">
+<div class="bg-accent-pink dark:bg-[#3f2e3e] p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:opacity-90 transition-opacity">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-white/50 dark:bg-black/20 rounded-xl flex items-center justify-center text-pink-700 dark:text-pink-300">
+<span class="material-icons-round">functions</span>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 dark:text-white text-sm">Mathematics</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400">Calculus II</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full border border-pink-300 flex items-center justify-center">
+<span class="text-xs font-bold text-pink-700 dark:text-pink-300">85%</span>
+</div>
+</div>
+<div class="bg-accent-blue dark:bg-[#2b3a4f] p-4 rounded-2xl flex items-center justify-between cursor-pointer hover:opacity-90 transition-opacity">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-white/50 dark:bg-black/20 rounded-xl flex items-center justify-center text-blue-700 dark:text-blue-300">
+<span class="material-icons-round">science</span>
+</div>
+<div>
+<h4 class="font-bold text-gray-900 dark:text-white text-sm">Physics</h4>
+<p class="text-xs text-gray-600 dark:text-gray-400">Thermodynamics</p>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full border border-blue-300 flex items-center justify-center">
+<span class="text-xs font-bold text-blue-700 dark:text-blue-300">40%</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+
+</body></html>

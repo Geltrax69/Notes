@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Manrope', sans-serif;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0f0f0f;
+  border-radius: 0px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #f8f8f5;
+}
+
+.dark ::-webkit-scrollbar-track {
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}

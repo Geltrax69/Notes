@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PDF Preview and Lock Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#000000",
+                        secondary: "#FFD166", // Example accent from screenshot
+                        "background-light": "#FDFBF7", // Creamy background from screenshot
+                        "background-dark": "#18181B",
+                        "surface-light": "#F2EBE3", // Slightly darker surface for sidebar
+                        "surface-dark": "#27272A",
+                        "card-pink-light": "#FBCFE8",
+                        "card-pink-dark": "#831843",
+                        "card-orange-light": "#FDE68A",
+                        "card-orange-dark": "#78350F",
+                        "card-blue-light": "#BFDBFE",
+                        "card-blue-dark": "#1E3A8A",
+                        "card-green-light": "#BBF7D0",
+                        "card-green-dark": "#14532D",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                        body: ["Plus Jakarta Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                        'xl': '1.5rem',
+                        '2xl': '2rem',
+                    },
+                },
+            },
+        };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        .pdf-page-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body text-gray-900 dark:text-gray-100 min-h-screen flex overflow-hidden selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-300">
+<nav class="w-24 flex-shrink-0 flex flex-col items-center py-8 bg-surface-light dark:bg-surface-dark m-4 rounded-2xl h-[calc(100vh-2rem)] justify-between hidden md:flex">
+<div class="flex flex-col items-center gap-8 w-full">
+<div class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center mb-4 cursor-pointer hover:scale-105 transition-transform">
+<span class="material-icons text-xl">school</span>
+</div>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-all relative group">
+<span class="absolute top-2 right-3 w-2 h-2 bg-pink-400 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
+<span class="material-icons">shopping_bag</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center bg-black text-white shadow-lg shadow-gray-400/50 dark:shadow-black/50 transition-all transform hover:scale-105">
+<span class="material-icons">home</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-all">
+<span class="material-icons">folder_open</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-all">
+<span class="material-icons">book</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-all">
+<span class="material-icons">grid_view</span>
+</button>
+</div>
+<div class="flex flex-col items-center gap-6 w-full">
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-all">
+<span class="material-icons">settings</span>
+</button>
+<div class="relative cursor-pointer group">
+<img alt="Profile" class="w-10 h-10 rounded-full border-2 border-white dark:border-gray-600 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI1GUgiZDYdIl1HGsbq5HcmhMRUIRi1n0TAVk9D7cBpghRRBhwmfocXMh4_hMppfPXxvraM7DaLPK-_qQ5MHzLaC2zTFcCzgVw-vEhs4TCNL-nH2S6lAqaGhrbuLOP0El7DoQ0rhggensUuipn5sy5vT_n79FXv2KSyJE9nV6O7UXcRgw4TdV8fb_P618nU7whkRA7ih89t07X887hWdWoVZdK3ZlIuvaFcLnhoMTq9d_frRhSdfkq6wsVM_wou-8kRqqPz_gz60k_"/>
+<div class="absolute inset-0 rounded-full ring-2 ring-purple-400 ring-offset-2 ring-offset-surface-light dark:ring-offset-surface-dark opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+</div>
+</nav>
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<header class="flex items-center justify-between px-8 py-6 bg-transparent z-10">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2 text-gray-600 dark:text-gray-300">
+<span class="material-icons">menu</span>
+</button>
+<h1 class="text-2xl font-display font-bold text-gray-900 dark:text-white">Advanced Data Structures &amp; Algorithms</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white dark:bg-surface-dark rounded-full shadow-sm border border-gray-100 dark:border-gray-700">
+<span class="material-icons text-gray-400 text-sm">search</span>
+<input class="bg-transparent border-none text-sm focus:ring-0 text-gray-600 dark:text-gray-300 w-48 placeholder-gray-400" placeholder="Search in document..." type="text"/>
+</div>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+<span class="material-icons">file_download</span>
+</button>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors">
+<span class="material-icons">share</span>
+</button>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto px-4 sm:px-8 pb-10 scroll-smooth">
+<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-6">
+<div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-2">
+<span class="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded text-xs font-semibold">CS 301</span>
+<span>•</span>
+<span>45 Pages</span>
+<span>•</span>
+<span>Last updated 2 days ago</span>
+<span>•</span>
+<div class="flex items-center text-yellow-500">
+<span class="material-icons text-sm">star</span>
+<span class="ml-1 text-gray-700 dark:text-gray-300 font-medium">4.8</span>
+</div>
+</div>
+<div class="bg-gray-100 dark:bg-zinc-800/50 p-6 sm:p-10 rounded-3xl relative">
+<div class="bg-white dark:bg-white text-black aspect-[3/4] w-full rounded-sm pdf-page-shadow mb-8 p-8 transform hover:scale-[1.01] transition-transform duration-300">
+<div class="h-4 w-1/3 bg-gray-200 mb-6"></div>
+<div class="space-y-3">
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-5/6 bg-gray-100"></div>
+<div class="h-2 w-full bg-gray-100"></div>
+</div>
+<div class="mt-8 flex gap-4">
+<div class="flex-1 h-24 bg-blue-50 rounded border border-blue-100"></div>
+<div class="flex-1 h-24 bg-gray-50 rounded border border-gray-100"></div>
+</div>
+<div class="mt-8 space-y-3">
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-4/6 bg-gray-100"></div>
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-3/4 bg-gray-100"></div>
+</div>
+<div class="absolute bottom-6 right-8 text-xs text-gray-400">Page 1</div>
+</div>
+<div class="bg-white dark:bg-white text-black aspect-[3/4] w-full rounded-sm pdf-page-shadow mb-8 p-8 transform hover:scale-[1.01] transition-transform duration-300">
+<div class="h-4 w-1/4 bg-gray-200 mb-6"></div>
+<div class="flex gap-6 mb-6">
+<div class="w-1/2 space-y-3">
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-full bg-gray-100"></div>
+</div>
+<div class="w-1/2 h-32 bg-gray-50 rounded border border-gray-100 flex items-center justify-center">
+<span class="material-icons text-gray-200 text-4xl">image</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-5/6 bg-gray-100"></div>
+</div>
+<div class="absolute bottom-6 right-8 text-xs text-gray-400">Page 2</div>
+</div>
+<div class="relative">
+<div class="bg-white dark:bg-white text-black aspect-[3/4] w-full rounded-sm pdf-page-shadow p-8 filter blur-[3px] select-none pointer-events-none opacity-80">
+<div class="h-4 w-1/3 bg-gray-200 mb-6"></div>
+<div class="space-y-3 mb-8">
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-full bg-gray-100"></div>
+<div class="h-2 w-5/6 bg-gray-100"></div>
+<div class="h-2 w-full bg-gray-100"></div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="h-20 bg-gray-100 rounded"></div>
+<div class="h-20 bg-gray-100 rounded"></div>
+<div class="h-20 bg-gray-100 rounded"></div>
+<div class="h-20 bg-gray-100 rounded"></div>
+</div>
+<div class="absolute bottom-6 right-8 text-xs text-gray-400">Page 3</div>
+</div>
+<div class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-gradient-to-b from-transparent via-white/80 to-white dark:via-zinc-800/80 dark:to-zinc-800 rounded-sm">
+<div class="bg-white dark:bg-surface-dark p-8 rounded-2xl shadow-2xl flex flex-col items-center text-center max-w-sm mx-4 border border-gray-100 dark:border-gray-700">
+<div class="w-16 h-16 bg-red-50 dark:bg-red-900/30 text-red-500 rounded-full flex items-center justify-center mb-4">
+<span class="material-icons text-3xl">lock</span>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Unlock full notes</h3>
+<p class="text-gray-500 dark:text-gray-400 mb-6 text-sm">
+                                        Get access to all 45 pages of high-quality study material, including diagrams and practice questions.
+                                    </p>
+<div class="flex items-center justify-center gap-2 mb-6">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">₹20</span>
+<span class="text-gray-400 line-through text-sm">₹99</span>
+<span class="bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs px-2 py-0.5 rounded-full font-bold">80% OFF</span>
+</div>
+<button class="w-full bg-black hover:bg-gray-800 text-white font-bold py-3.5 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-gray-200 dark:shadow-none transform hover:-translate-y-1">
+<span class="material-icons text-sm">lock_open</span>
+                                        Unlock Now
+                                    </button>
+<p class="mt-4 text-xs text-gray-400">Secure payment via UPI / Card</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12">
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Student Reviews</h3>
+<div class="flex gap-4 mb-8">
+<img alt="User" class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxKT4qfucgO021faGdH495lnM7hC9DM8TOnaRHXOWbTN0q4lk8GysIIsekB9z02bGSKDCOJsC0ERYsn4PuBXg6KyTNW90us08gGlfbu-D1DxJFxKROtKX7o7PBmK8UiBdv1OfvSTTKdHvJ9OKfU5VmqhxZPNgNz5-LkI1S7gS-KxrjcqrAu6E-L-Bo2TP-LcIbtD6W-sG77bQf5r18hlg2FIBkT8J63Hxfge3ZTzpqTlex75cwoXL9lvQdWRS1WfuqZox_LlRuAAZD"/>
+<div class="flex-1">
+<textarea class="w-full bg-white dark:bg-surface-dark border-gray-200 dark:border-gray-700 rounded-xl focus:ring-black dark:focus:ring-white focus:border-transparent text-sm min-h-[100px] resize-none" placeholder="Add a comment or review..."></textarea>
+<div class="flex justify-end mt-2">
+<button class="bg-gray-900 dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">Post Review</button>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="flex gap-4 p-4 bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-700">
+<img alt="Reviewer" class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuMomLaof2o0qNdmTPFpbGtyMNxqKLc2VW4iMbc1Fu8LQ451IUkypm0U9pkMOMGwMr_qv4Bcd0TfaA3-E79FJzO1oJgEf0bNwQj5PrCeNULTxJa14U6RWDG-A2KrMWHPbFBY1Rx6KBW9a4y5O-r7mTLkiAzYnEOjJFbDaEIo8eIV3tc7QrtV_Hyjs6fBbf42QYSSadrA1fTExjgN9nPuLxZ71G_Fm9xK2VTXLdWMPkfI9OEe03ya-vpCDNQ8X4-Q9h-gYOhtvoaW5H"/>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-bold text-gray-900 dark:text-white text-sm">Marcus Chen</h4>
+<span class="text-gray-400 text-xs">• 2 hours ago</span>
+</div>
+<div class="flex text-yellow-400 text-xs mb-2">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+</div>
+<p class="text-gray-600 dark:text-gray-300 text-sm">These notes are incredibly concise and saved me during finals! The algorithm diagrams are super clear.</p>
+</div>
+</div>
+<div class="flex gap-4 p-4 bg-white dark:bg-surface-dark rounded-xl border border-gray-100 dark:border-gray-700">
+<img alt="Reviewer" class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUahLq6QH2uqMb46aGRyjohNpmDhbRHCa0dR_EmfbUCTxVQN7XgKcjHvK-vcGiG6YkOg-LMZFSxEFSv0JN7_8phvcSNMBAzYSquNPmaZHOKy9KhyRUgnQwWPgi2lEbwcb0vrGBlLVLfsqWl6v_MeHQzWknuGJaPqwEmgpyzDDFc2rgy8plI687qYiWtGrglmcuO6p_wIYd5l6QbP676RMr095tmoXp_Ay_MbaZY_E28JyJdyfvqA79n-t1yPfvTvr_UMkyEOQTRvv2"/>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-bold text-gray-900 dark:text-white text-sm">Sarah Miller</h4>
+<span class="text-gray-400 text-xs">• 1 day ago</span>
+</div>
+<div class="flex text-yellow-400 text-xs mb-2">
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-sm">star</span>
+<span class="material-icons text-gray-300 dark:text-gray-600 text-sm">star</span>
+</div>
+<p class="text-gray-600 dark:text-gray-300 text-sm">Good content for the price. Would have loved more Python examples, but the pseudo-code is solid.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="hidden lg:block space-y-6">
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-3xl">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg dark:text-white">Author</h3>
+<button class="text-gray-400 hover:text-black dark:hover:text-white"><span class="material-icons">more_horiz</span></button>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="relative mb-3">
+<img alt="Author" class="w-20 h-20 rounded-full object-cover border-4 border-white dark:border-zinc-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAadmbF0kAsOtu12gzNvWdRzHB2P_xqmi5qOfvvmWErqfAbBSK9RrjUYKBWu2Fk6SxlgVBkKcy0SRJguPpXcVGieQhIkKBt1FZTGL5e3rQbiAPI9gPhpgOBVaEJI6Jv7iGUgPbvdCb7FjREomT1kw3Icytz38IljIoQ9ZRs3NXnVR0M1gHo1DrjduT-K0wBau4znrNihmBD_o2jOS7ln2nZHt09e2W6XmfSKixINMxn6NCK-hgOzFT7zo3d_X4pDT71X2CD-hEOxkVb"/>
+<div class="absolute bottom-0 right-0 bg-blue-500 text-white rounded-full p-1 border-2 border-white dark:border-zinc-700">
+<span class="material-icons text-xs block">check</span>
+</div>
+</div>
+<h4 class="font-bold text-lg text-gray-900 dark:text-white">Prof. Emily Stone</h4>
+<p class="text-gray-500 dark:text-gray-400 text-sm mb-4">Senior CS Lecturer @ MIT</p>
+<div class="flex w-full justify-between px-4 py-3 bg-white dark:bg-zinc-800 rounded-2xl mb-4">
+<div class="text-center">
+<p class="text-xs text-gray-400 uppercase tracking-wide">Students</p>
+<p class="font-bold text-gray-900 dark:text-white">12.5k</p>
+</div>
+<div class="w-px bg-gray-100 dark:bg-gray-700"></div>
+<div class="text-center">
+<p class="text-xs text-gray-400 uppercase tracking-wide">Courses</p>
+<p class="font-bold text-gray-900 dark:text-white">24</p>
+</div>
+<div class="w-px bg-gray-100 dark:bg-gray-700"></div>
+<div class="text-center">
+<p class="text-xs text-gray-400 uppercase tracking-wide">Rating</p>
+<p class="font-bold text-gray-900 dark:text-white">4.9</p>
+</div>
+</div>
+<button class="w-full py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-sm font-semibold hover:bg-white dark:hover:bg-zinc-700 transition-colors dark:text-white">View Profile</button>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-3xl">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-lg dark:text-white">Related Notes</h3>
+<a class="text-xs font-bold text-gray-400 hover:text-black dark:hover:text-white" href="#">See all</a>
+</div>
+<div class="space-y-4">
+<div class="flex gap-3 items-center group cursor-pointer">
+<div class="w-12 h-12 bg-card-pink-light dark:bg-card-pink-dark rounded-xl flex items-center justify-center text-pink-600 dark:text-pink-100">
+<span class="material-icons">data_object</span>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-pink-500 transition-colors line-clamp-1">Database Management</h5>
+<div class="flex items-center gap-1 text-xs text-gray-500">
+<span class="material-icons text-[10px]">star</span> 4.7 • ₹15
+                                    </div>
+</div>
+</div>
+<div class="flex gap-3 items-center group cursor-pointer">
+<div class="w-12 h-12 bg-card-orange-light dark:bg-card-orange-dark rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-100">
+<span class="material-icons">code</span>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-orange-500 transition-colors line-clamp-1">Python for Beginners</h5>
+<div class="flex items-center gap-1 text-xs text-gray-500">
+<span class="material-icons text-[10px]">star</span> 4.9 • ₹25
+                                    </div>
+</div>
+</div>
+<div class="flex gap-3 items-center group cursor-pointer">
+<div class="w-12 h-12 bg-card-green-light dark:bg-card-green-dark rounded-xl flex items-center justify-center text-green-700 dark:text-green-100">
+<span class="material-icons">security</span>
+</div>
+<div class="flex-1">
+<h5 class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-green-600 transition-colors line-clamp-1">Cyber Security Basics</h5>
+<div class="flex items-center gap-1 text-xs text-gray-500">
+<span class="material-icons text-[10px]">star</span> 4.6 • ₹18
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<aside class="w-80 bg-surface-light dark:bg-surface-dark m-4 rounded-2xl hidden 2xl:flex flex-col p-6 h-[calc(100vh-2rem)] overflow-y-auto">
+<div class="flex justify-between items-center mb-8">
+<button class="text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white"><span class="material-icons">notifications</span></button>
+<button class="text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white"><span class="material-icons">settings</span></button>
+</div>
+<div class="flex flex-col items-center mb-8">
+<div class="relative mb-3">
+<img alt="Annette Black" class="w-20 h-20 rounded-full object-cover ring-4 ring-white dark:ring-zinc-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjBhLrfoMci1J-eGlOfy7PhgHr8-pxCIjxu0YFZxUVktiy22bZC-uZHyy2cmYxTYmCQjhuRL9dihpFxe6q7785YynUvIjE5nrRJ3Di5LSNE2_2W2aIKZmu4Jy1iKdxcZ6Zil9uuRJB0joPNLJuPXu-6Y7W-jN7kkz0OOJ8-VcMhopiOi8wCKSdxf9yc8LNrazb8PBdkbq07LpiL5h0WgL8vnHimEgIOOMtaJIUvbBR3w9qfLWKgrA1PIWfs50E6UnmlV-9DWAXdTjK"/>
+<div class="absolute bottom-0 right-0 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white border-2 border-surface-light dark:border-surface-dark text-xs">
+<span class="material-icons" style="font-size: 14px;">emoji_events</span>
+</div>
+</div>
+<h2 class="text-xl font-bold text-gray-900 dark:text-white">Annette Black</h2>
+<p class="text-sm text-gray-500 dark:text-gray-400">Student</p>
+</div>
+<div class="bg-white dark:bg-zinc-800 p-4 rounded-xl mb-6 flex justify-between items-center shadow-sm">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
+<span class="material-icons text-gray-500 text-sm">person</span>
+</div>
+<span class="text-sm font-semibold text-gray-700 dark:text-gray-200">274 Friends</span>
+</div>
+<div class="flex -space-x-2">
+<img alt="Friend 1" class="w-8 h-8 rounded-full border-2 border-white dark:border-zinc-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8mxXGjETrqcanmS3O8wV6yG1LCKJMSmpKZMPJNBY2Gr84hxR4Ws5ln6780oA2R8qOO7xvuWh8srBblE_m4poN0CwmBNVOere7mF2VR9J6PRrpN3F_yYS2_ZkGSjoEWmWLeztMCELUbQgJZe6X9vK8RSYraotpvNzQBnmgAhsnawkIS3Bryjko_83TlU9dfim97rAhro702wBxDJ3lTupdPSRr2v1T5zysdfMMspj0pIkgcPoHXdfX1XNH28GpT8CAaIl7pQqz9l3n"/>
+<img alt="Friend 2" class="w-8 h-8 rounded-full border-2 border-white dark:border-zinc-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzsA0F4G2r6KaeZqeI903TeLmyfNrnkYUxWL9-cmJVeaolth9RiPMs0TZWub4CdoJfbfGr9JnPfH0E59rSU4tvmZ41cFy1idbx0ad7kYbOAggJO_mOa3v1DxRsnHHKTzrjofY5nGhOH7YojrjuHuLnSr5owauGfCm6NDJ07Llpo-9HOoEMnhdKyxowb20ZcL4kuJLxUfpdoT11CVQoO6uzW1jfIZ4FzVBpZAdPvMekjWPawlL6m5F3GSZbFwm_czUJ6NxhNHOApGcA"/>
+<div class="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-700 border-2 border-white dark:border-zinc-800 flex items-center justify-center text-xs text-gray-500 dark:text-gray-300">
+<span class="material-icons" style="font-size: 14px;">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-zinc-800 p-5 rounded-2xl mb-6 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-xs text-gray-500 mb-1">Activity</p>
+<div class="flex items-center gap-2">
+<span class="text-2xl font-bold text-gray-900 dark:text-white">3.5h</span>
+<span class="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+<span class="material-icons" style="font-size: 10px;">thumb_up</span> Great result!
+                        </span>
+</div>
+</div>
+<button class="text-xs text-gray-400 flex items-center">Year <span class="material-icons" style="font-size: 14px;">expand_more</span></button>
+</div>
+<div class="flex justify-between items-end h-32 px-2">
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-6 bg-card-orange-light rounded-t-lg h-16 group-hover:h-20 transition-all"></div>
+<span class="text-[10px] text-gray-400">Jan</span>
+</div>
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-6 bg-card-pink-light rounded-t-lg h-12 group-hover:h-16 transition-all"></div>
+<span class="text-[10px] text-gray-400">Jan</span>
+</div>
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-6 bg-card-green-light rounded-t-lg h-10 group-hover:h-14 transition-all"></div>
+<span class="text-[10px] text-gray-400">Aug</span>
+</div>
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-6 bg-card-blue-light rounded-t-lg h-20 group-hover:h-24 transition-all"></div>
+<span class="text-[10px] text-gray-400">Sep</span>
+</div>
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-6 bg-purple-200 rounded-t-lg h-14 group-hover:h-18 transition-all"></div>
+<span class="text-[10px] text-gray-400">Oct</span>
+</div>
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-6 bg-gray-200 rounded-t-lg h-8 group-hover:h-12 transition-all"></div>
+<span class="text-[10px] text-gray-400">Nov</span>
+</div>
+<div class="flex flex-col items-center gap-2 relative">
+<div class="w-8 border-2 border-black dark:border-white rounded-xl p-0.5 h-36 flex flex-col justify-end">
+<div class="bg-card-green-light w-full h-1/4 rounded-t-lg rounded-b-sm"></div>
+<div class="bg-card-blue-light w-full h-1/4 rounded-sm"></div>
+<div class="bg-card-pink-light w-full h-1/4 rounded-sm"></div>
+<div class="bg-card-orange-light w-full h-1/4 rounded-b-lg rounded-t-sm"></div>
+</div>
+<div class="bg-black dark:bg-white text-white dark:text-black text-[10px] px-2 py-0.5 rounded-full absolute -bottom-6 font-bold">Dec</div>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-sm font-bold text-gray-900 dark:text-white mb-4">My courses</h3>
+<div class="space-y-4">
+<div class="bg-card-pink-light dark:bg-card-pink-dark p-4 rounded-2xl relative overflow-hidden group hover:shadow-md transition-shadow cursor-pointer">
+<div class="absolute right-0 top-0 h-full w-1/3 bg-white/20 -skew-x-12 transform translate-x-4"></div>
+<div class="relative z-10 flex justify-between items-start mb-6">
+<div class="w-8 h-8 bg-white/80 dark:bg-black/20 rounded-lg flex items-center justify-center">
+<span class="material-icons text-sm text-gray-800 dark:text-white">computer</span>
+</div>
+<div class="bg-white/90 dark:bg-black/40 px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 dark:text-white">
+<span class="material-icons text-[10px]">star</span> 4.8
+                        </div>
+</div>
+<h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1 line-clamp-2">Flutter Masterclass (Dart, APIs, Firebase &amp; More)</h4>
+<p class="text-xs text-gray-600 dark:text-gray-200">9,530 students</p>
+<div class="mt-4 flex items-center -space-x-2">
+<img alt="Student" class="w-6 h-6 rounded-full border-2 border-white dark:border-pink-900" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqEeZUUrnDmdhRJSuFOC4uZm39wdt3dGcS4XHnRZClFEz3dhKoSH2VUzCc3sgC2CF6juAAzhGDz_l9yf1LU1zdihFtdXtref4IThdqB5s8vtbnCvKu8-5mkBHQrFJ_WslBSD-59tEEgC_ZhXew9w-SMQ0XBCMfAqxstcoPiRlY8p39vSZ6mKCkisjnix08FbHTOYHINiNWsyKjUf5JEVxwAQ-t8uv4vKnzI90Iz18hInTO49u_EaVHaj5SEn5w8DQAHw5652LRLetB"/>
+<img alt="Student" class="w-6 h-6 rounded-full border-2 border-white dark:border-pink-900" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIrzEI3hdr8dC0VIlI-YCC1W2Es2IplU8BECS-6eBV4lrZ0w7Fww2z2Qjb3Q7yaUpF8iZ-CIWdVZHTM60KCeV6KY2N6fAjWMK9n5mBV6Y5NsRATSdtx4iTfYUNiZKP_Es6Cz2J69mBR74tvK1wc8pwa1Q-_q6buK3-duGVhb4SH3MeYBr59HXLcIYLnUNBEDLS0WCtKhVncCmy9CbGtTCRPjpQG6ZaXQmbU1hk3ixRM06xpZrrGrF8uusenh83HOHiN4vd0rZFYIMi"/>
+</div>
+</div>
+<div class="bg-card-orange-light dark:bg-card-orange-dark p-4 rounded-2xl relative overflow-hidden group hover:shadow-md transition-shadow cursor-pointer">
+<div class="absolute right-0 top-0 h-full w-1/3 bg-white/20 -skew-x-12 transform translate-x-4"></div>
+<div class="relative z-10 flex justify-between items-start mb-2">
+<div class="w-8 h-8 bg-white/80 dark:bg-black/20 rounded-lg flex items-center justify-center">
+<span class="material-icons text-sm text-gray-800 dark:text-white">business_center</span>
+</div>
+<div class="bg-white/90 dark:bg-black/40 px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 dark:text-white">
+<span class="material-icons text-[10px]">star</span> 4.9
+                        </div>
+</div>
+<h4 class="font-bold text-gray-900 dark:text-white text-sm mb-1">Business Strategy</h4>
+</div>
+</div>
+</div>
+</aside>
+
+</body></html>

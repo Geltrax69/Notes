@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Subject Topics List - Grammar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#111827", // Dark almost black for primary text/elements in light mode
+                        "background-light": "#FFFBF7", // Soft cream background
+                        "background-dark": "#121212", // Dark mode background
+                        "surface-light": "#F8F1EB", // Slightly darker cream for sidebar
+                        "surface-dark": "#1E1E1E", // Dark mode surface
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#2A2A2A",
+                        "accent-pink": "#F6D6D6",
+                        "accent-orange": "#FBE6D4",
+                        "accent-purple": "#DDD6FE",
+                        "accent-green": "#D1FAE5",
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200 font-sans antialiased min-h-screen transition-colors duration-200">
+<div class="flex h-screen overflow-hidden p-4 gap-4">
+<aside class="w-24 hidden md:flex flex-col items-center py-8 rounded-2xl bg-surface-light dark:bg-surface-dark justify-between shadow-sm border border-orange-100/50 dark:border-white/5">
+<div class="flex flex-col items-center gap-8 w-full">
+<div class="w-10 h-10 flex items-center justify-center text-2xl font-bold mb-4">
+<span class="material-icons-outlined text-gray-900 dark:text-white transform -rotate-12">school</span>
+</div>
+<nav class="flex flex-col items-center gap-6 w-full">
+<button class="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white dark:hover:bg-card-dark transition-all text-gray-400 hover:text-gray-900 dark:hover:text-white relative group">
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-400 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
+<span class="material-icons-outlined">shopping_bag</span>
+</button>
+<button class="w-12 h-12 rounded-2xl flex items-center justify-center bg-primary text-white shadow-lg shadow-gray-300 dark:shadow-none">
+<span class="material-icons-outlined">home</span>
+</button>
+<button class="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white dark:hover:bg-card-dark transition-all text-gray-400 hover:text-gray-900 dark:hover:text-white">
+<span class="material-icons-outlined">library_books</span>
+</button>
+<button class="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white dark:hover:bg-card-dark transition-all text-gray-400 hover:text-gray-900 dark:hover:text-white">
+<span class="material-icons-outlined">bookmark_border</span>
+</button>
+<button class="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white dark:hover:bg-card-dark transition-all text-gray-400 hover:text-gray-900 dark:hover:text-white">
+<span class="material-icons-outlined">grid_view</span>
+</button>
+</nav>
+</div>
+<div class="flex flex-col items-center gap-6">
+<button class="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white dark:hover:bg-card-dark transition-all text-gray-400 hover:text-gray-900 dark:hover:text-white">
+<span class="material-icons-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white dark:border-gray-700 shadow-md">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPt7xISjVJNTV-hsUPtTZaRapfdizFwyiJ58484xDPxJ3VE_9PVgChA-Ii3syMM2ZNoE8Jo-rOYcPH-x1LpMpqsEyXcyFOk7jXypZLW3tet7PXzXdYMv9o2gRVQvVRUcH1JvPpPuDSmfTh06OwrYB-n2GeR98vkw7CZLs3igOoaorTzgi9h1zaik7mPXV0bzbJwteElmcW1K2PfjIE-JvNPfjVVuc6RYuHvOUXZIuRUCQpHP_4aPpDZzbpco5OHcPhpcSu5807Vg7I"/>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col gap-6 h-full overflow-hidden rounded-2xl">
+<header class="flex justify-between items-center py-2 px-4">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2 text-gray-600 dark:text-gray-300">
+<span class="material-icons-outlined">menu</span>
+</button>
+<div>
+<div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-1">
+<span>Subjects</span>
+<span class="material-icons-outlined text-xs">chevron_right</span>
+<span class="text-gray-900 dark:text-white font-medium">Grammar</span>
+</div>
+<h1 class="text-4xl font-bold text-gray-900 dark:text-white">English Grammar Notes</h1>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-icons-outlined text-gray-400">search</span>
+<input class="pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-surface-dark border-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700 w-64 text-sm shadow-sm" placeholder="Search topics..." type="text"/>
+</div>
+</div>
+</header>
+<div class="flex gap-3 overflow-x-auto pb-2 px-4 no-scrollbar">
+<button class="flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap shadow-lg shadow-gray-200 dark:shadow-none transition-transform active:scale-95">
+<span class="material-icons-outlined text-lg">grid_view</span>
+                    All Topics
+                </button>
+<button class="flex items-center gap-2 bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-card-dark text-gray-600 dark:text-gray-300 px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+<span class="material-icons-outlined text-lg">psychology</span>
+                    Advanced
+                </button>
+<button class="flex items-center gap-2 bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-card-dark text-gray-600 dark:text-gray-300 px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+<span class="material-icons-outlined text-lg">school</span>
+                    Basics
+                </button>
+<button class="flex items-center gap-2 bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-card-dark text-gray-600 dark:text-gray-300 px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+<span class="material-icons-outlined text-lg">quiz</span>
+                    Practice
+                </button>
+</div>
+<div class="flex-1 flex gap-6 overflow-hidden px-4 pb-4">
+<div class="flex-1 overflow-y-auto pr-2 pb-10">
+<div class="mb-6">
+<h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Fundamental Concepts</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+<div class="group bg-accent-pink/30 dark:bg-opacity-10 dark:bg-red-900 p-6 rounded-3xl relative hover:shadow-lg transition-all duration-300 cursor-pointer border border-transparent dark:border-red-900/30">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-white/60 dark:bg-black/20 p-2 rounded-xl backdrop-blur-sm">
+<span class="material-icons-outlined text-gray-700 dark:text-red-200">category</span>
+</div>
+<div class="bg-white dark:bg-card-dark px-3 py-1 rounded-full text-xs font-bold text-gray-800 dark:text-white flex items-center gap-1 shadow-sm">
+<span class="material-icons-outlined text-[14px] text-yellow-500">star</span>
+                                        4.8
+                                    </div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-red-800 dark:group-hover:text-red-300 transition-colors">Parts of Speech</h3>
+<p class="text-sm text-gray-600 dark:text-gray-300 mb-6 line-clamp-2">Detailed notes on Nouns, Verbs, Adjectives, Adverbs and more with examples.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Student" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0IxXjBChk-fonWy74q_xpkdOQAM5HjufiU6vBqJvKfURMwmiK7pIY8IF6uiAbUgetcDhglwX3zG40lgqgzfidDVarAl85ssCHaorNopauyOfnDQRsu6ggfSxhRq092cpxySxv0DHIEb_5I-9ufrQXNO85qZJUrJjAO4_fduQ8Pq2UxyytbHGTz1XO7S1cTb_mJsRyjj85cJfBIxvMLl960r9GY6w-C0vHY-gUX_-4CpoMkw4rt4nOFZqhPyPtKHZMBooh80OSMW9z"/>
+<img alt="Student" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoYVfoIyS_0f08yG_DVaRW6wSylb9GztGK0nwFmsSVk3diBG53T40i1AVZk1_BVqDbm6Oq391AUaF1TriT4IGhOtjpw7g7H55r0BUE_L-Yd42gU629O9YY702Jdv65CLgxqYETfu3sieL6U4G6SOBGZC8tfWiNfFvJbdFSZsQadtOvICYrLximSphoyAlPwHo6B0wmhs5s2fAJCsMqvDHPJopTz6E4ayUn4KFuBNS_r26UrQTWzwS-B-leAqR5toxnvxfV72iAF05R"/>
+<div class="h-8 w-8 rounded-full bg-white dark:bg-card-dark ring-2 ring-white dark:ring-gray-800 flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-300">+2k</div>
+</div>
+<div class="text-right">
+<span class="block text-[10px] text-gray-500 dark:text-gray-400 uppercase font-semibold tracking-wider">Price</span>
+<span class="text-lg font-bold text-gray-900 dark:text-white">₹20</span>
+</div>
+</div>
+<div class="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-icons-outlined text-gray-900 dark:text-white">arrow_outward</span>
+</div>
+</div>
+<div class="group bg-accent-orange/40 dark:bg-opacity-10 dark:bg-orange-900 p-6 rounded-3xl relative hover:shadow-lg transition-all duration-300 cursor-pointer border border-transparent dark:border-orange-900/30">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-white/60 dark:bg-black/20 p-2 rounded-xl backdrop-blur-sm">
+<span class="material-icons-outlined text-gray-700 dark:text-orange-200">schedule</span>
+</div>
+<div class="bg-white dark:bg-card-dark px-3 py-1 rounded-full text-xs font-bold text-gray-800 dark:text-white flex items-center gap-1 shadow-sm">
+<span class="material-icons-outlined text-[14px] text-yellow-500">star</span>
+                                        4.9
+                                    </div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-orange-800 dark:group-hover:text-orange-300 transition-colors">Tenses Masterclass</h3>
+<p class="text-sm text-gray-600 dark:text-gray-300 mb-6 line-clamp-2">Complete guide to all 12 tenses with timeline diagrams and practice sheets.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<span class="bg-white/60 dark:bg-black/20 px-2 py-1 rounded-md text-xs font-semibold text-gray-700 dark:text-orange-100 flex items-center gap-1">
+<span class="material-icons-outlined text-sm">visibility</span> Preview
+                                         </span>
+</div>
+<div class="text-right">
+<span class="block text-[10px] text-gray-500 dark:text-gray-400 uppercase font-semibold tracking-wider">Price</span>
+<span class="text-lg font-bold text-gray-900 dark:text-white">₹35</span>
+</div>
+</div>
+</div>
+</div>
+<h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-8 mb-4">Advanced Topics</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+<div class="group bg-accent-purple/40 dark:bg-opacity-10 dark:bg-purple-900 p-6 rounded-3xl relative hover:shadow-lg transition-all duration-300 cursor-pointer border border-transparent dark:border-purple-900/30">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-white/60 dark:bg-black/20 p-2 rounded-xl backdrop-blur-sm">
+<span class="material-icons-outlined text-gray-700 dark:text-purple-200">record_voice_over</span>
+</div>
+<div class="bg-white dark:bg-card-dark px-3 py-1 rounded-full text-xs font-bold text-gray-800 dark:text-white flex items-center gap-1 shadow-sm">
+<span class="material-icons-outlined text-[14px] text-yellow-500">star</span>
+                                        5.0
+                                    </div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-purple-800 dark:group-hover:text-purple-300 transition-colors">Active &amp; Passive Voice</h3>
+<p class="text-sm text-gray-600 dark:text-gray-300 mb-6 line-clamp-2">Rules for conversion with emphasis on academic writing styles.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<span class="bg-white/60 dark:bg-black/20 px-2 py-1 rounded-md text-xs font-semibold text-gray-700 dark:text-purple-100 flex items-center gap-1">
+<span class="material-icons-outlined text-sm">visibility</span> Preview
+                                         </span>
+</div>
+<div class="text-right">
+<span class="block text-[10px] text-gray-500 dark:text-gray-400 uppercase font-semibold tracking-wider">Price</span>
+<span class="text-lg font-bold text-gray-900 dark:text-white">₹25</span>
+</div>
+</div>
+</div>
+<div class="group bg-accent-green/40 dark:bg-opacity-10 dark:bg-green-900 p-6 rounded-3xl relative hover:shadow-lg transition-all duration-300 cursor-pointer border border-transparent dark:border-green-900/30">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-white/60 dark:bg-black/20 p-2 rounded-xl backdrop-blur-sm">
+<span class="material-icons-outlined text-gray-700 dark:text-green-200">format_quote</span>
+</div>
+<div class="bg-yellow-100 dark:bg-yellow-900/40 px-3 py-1 rounded-full text-xs font-bold text-yellow-800 dark:text-yellow-200 flex items-center gap-1 shadow-sm">
+<span class="material-icons-outlined text-[14px]">emoji_events</span>
+                                        Best Value
+                                    </div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-green-800 dark:group-hover:text-green-300 transition-colors">Direct &amp; Indirect Speech</h3>
+<p class="text-sm text-gray-600 dark:text-gray-300 mb-6 line-clamp-2">Understanding narration changes for reporting and storytelling.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Student" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuJ3s-aB0Lhk8W6ve6aoR-JNDuWBWexayNCiTwPq-ev4Lul5HEL6XjDTRXRvm0egW8vkjHxPUy8vzrXOaYJ4lLw04QeqbQgZruJAay1-hMrSoQlvZ1Qry_r1n_Fl7j84txj0F0OgcTFBqXbOd1tNDOg4AShOxZ_Njb4zByrhN5ubqJI40TfkIG9vU7xNnXMH9P5_Y0TYpKcAau_5fIfvTqPCmXfXQowBHlktoC1xqnYLUaNcf_XpOpPg8COwSHuVszptl6SwUIbiZ6"/>
+<div class="h-8 w-8 rounded-full bg-white dark:bg-card-dark ring-2 ring-white dark:ring-gray-800 flex items-center justify-center text-xs font-bold text-gray-600 dark:text-gray-300">+850</div>
+</div>
+<div class="text-right">
+<span class="block text-[10px] text-gray-500 dark:text-gray-400 uppercase font-semibold tracking-wider">Price</span>
+<span class="text-lg font-bold text-gray-900 dark:text-white">₹22</span>
+</div>
+</div>
+</div>
+</div>
+<h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mt-8 mb-4">Vocabulary Building</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+<div class="group bg-blue-100 dark:bg-opacity-10 dark:bg-blue-900 p-6 rounded-3xl relative hover:shadow-lg transition-all duration-300 cursor-pointer border border-transparent dark:border-blue-900/30">
+<div class="flex justify-between items-start mb-4">
+<div class="bg-white/60 dark:bg-black/20 p-2 rounded-xl backdrop-blur-sm">
+<span class="material-icons-outlined text-gray-700 dark:text-blue-200">spellcheck</span>
+</div>
+<div class="bg-white dark:bg-card-dark px-3 py-1 rounded-full text-xs font-bold text-gray-800 dark:text-white flex items-center gap-1 shadow-sm">
+<span class="material-icons-outlined text-[14px] text-yellow-500">star</span>
+                                        4.7
+                                    </div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-800 dark:group-hover:text-blue-300 transition-colors">Idioms &amp; Phrases</h3>
+<p class="text-sm text-gray-600 dark:text-gray-300 mb-6 line-clamp-2">100 most common idioms with meanings and usage examples.</p>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex items-center gap-2">
+<span class="bg-white/60 dark:bg-black/20 px-2 py-1 rounded-md text-xs font-semibold text-gray-700 dark:text-blue-100 flex items-center gap-1">
+<span class="material-icons-outlined text-sm">visibility</span> Preview
+                                         </span>
+</div>
+<div class="text-right">
+<span class="block text-[10px] text-gray-500 dark:text-gray-400 uppercase font-semibold tracking-wider">Price</span>
+<span class="text-lg font-bold text-gray-900 dark:text-white">₹15</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside class="hidden lg:flex w-80 flex-col gap-6">
+<div class="bg-surface-light dark:bg-surface-dark rounded-3xl p-6 flex flex-col items-center text-center shadow-sm">
+<div class="w-full flex justify-between items-start mb-2">
+<button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-white"><span class="material-icons-outlined">notifications</span></button>
+<button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-white"><span class="material-icons-outlined">more_horiz</span></button>
+</div>
+<div class="w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-accent-pink to-accent-purple mb-3">
+<img alt="Annette Black" class="w-full h-full rounded-full object-cover border-2 border-surface-light dark:border-surface-dark" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3zbfquD-qyhifBJip9tal734zAnCpDNa-Q1xQLGIkn-cj-qOu8-UHLnPlKp3fDl1IUf1KuglD5lQ1SBvVoNJ-SXxWJxuptOuGP03lHLEEPu_IFZPhAAohxWQkSpE6OYlGfQosD4v6q15Qk1zSUBEbEKWRPNyM-wFVIYqOBTMOyD9FreuJHP_lxmBys9Ol6_NHXRKFmo22N5IHyO6nl7UF-9CcOtGbmzKKifRjnR6YVrWWY5v5N2wYmXZcvdYNxkV_rS9tb3zz4RCq"/>
+</div>
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Annette Black</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Class 12 • Science Stream</p>
+<div class="flex items-center justify-center gap-4 w-full bg-white dark:bg-card-dark p-3 rounded-2xl mb-4">
+<div class="flex items-center gap-2">
+<span class="material-icons-outlined text-gray-600 dark:text-gray-300">account_balance_wallet</span>
+<span class="text-sm font-bold text-gray-900 dark:text-white">₹450</span>
+</div>
+<div class="w-px h-6 bg-gray-200 dark:bg-gray-700"></div>
+<div class="flex items-center gap-2">
+<span class="material-icons-outlined text-gray-600 dark:text-gray-300">shopping_cart</span>
+<span class="text-sm font-bold text-gray-900 dark:text-white">2 items</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-3xl p-6 flex-1 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-bold text-gray-900 dark:text-white">Recent Purchases</h3>
+<button class="text-xs font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">See all</button>
+</div>
+<div class="space-y-4">
+<div class="bg-white dark:bg-card-dark p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-transparent dark:border-gray-700">
+<div class="w-12 h-12 rounded-xl bg-accent-pink/50 dark:bg-red-900/40 flex items-center justify-center text-red-600 dark:text-red-200">
+<span class="material-icons-outlined">science</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm text-gray-900 dark:text-white">Organic Chemistry</h4>
+<p class="text-xs text-gray-500 dark:text-gray-400">Chemical Bonding</p>
+</div>
+<span class="text-xs font-bold bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded-md">Paid</span>
+</div>
+<div class="bg-white dark:bg-card-dark p-4 rounded-2xl flex items-center gap-4 shadow-sm border border-transparent dark:border-gray-700">
+<div class="w-12 h-12 rounded-xl bg-accent-orange/50 dark:bg-orange-900/40 flex items-center justify-center text-orange-600 dark:text-orange-200">
+<span class="material-icons-outlined">functions</span>
+</div>
+<div class="flex-1">
+<h4 class="font-bold text-sm text-gray-900 dark:text-white">Calculus Basics</h4>
+<p class="text-xs text-gray-500 dark:text-gray-400">Limits &amp; Continuity</p>
+</div>
+<span class="text-xs font-bold bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded-md">Paid</span>
+</div>
+</div>
+<div class="mt-auto pt-6">
+<div class="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 rounded-2xl p-5 text-white dark:text-gray-900 relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-xs opacity-80 mb-1">Upgrade Plan</p>
+<h4 class="text-lg font-bold mb-3 leading-tight">Get Unlimited Access</h4>
+<button class="bg-white/20 dark:bg-black/10 backdrop-blur-md px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/30 transition-colors">Go Premium</button>
+</div>
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+<div class="absolute right-2 top-2 w-12 h-12 bg-white/10 rounded-full blur-xl"></div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<script>
+        // Simple dark mode toggle logic for demonstration purposes if needed
+        // Ideally handled by system preference or a toggle button
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+           // document.documentElement.classList.add('dark');
+        }
+    </script>
+
+</body></html>

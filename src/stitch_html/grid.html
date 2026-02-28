@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Subject Selection Grid</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1e1e1e", // Dark charcoal for primary actions/text
+                        "background-light": "#fdf8f5", // Creamy background from image
+                        "background-dark": "#121212", // Dark mode background
+                        "sidebar-light": "#f5efe9", // Slightly darker cream for sidebar
+                        "sidebar-dark": "#1e1e1e", // Dark mode sidebar
+                        "card-pink": "#fecaca",
+                        "card-orange": "#fed7aa",
+                        "card-purple": "#e9d5ff",
+                        "card-green": "#bbf7d0",
+                        "card-blue": "#bfdbfe",
+                        "card-yellow": "#fef08a",
+                    },
+                    fontFamily: {
+                        display: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        body: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-body transition-colors duration-300 h-screen overflow-hidden flex">
+<aside class="w-24 h-full bg-sidebar-light dark:bg-sidebar-dark flex flex-col items-center py-8 space-y-8 flex-shrink-0 transition-colors duration-300">
+<div class="mb-4">
+<div class="w-10 h-10 bg-black dark:bg-white rounded-xl flex items-center justify-center text-white dark:text-black font-bold text-xl">
+<span class="material-icons-round">school</span>
+</div>
+</div>
+<nav class="flex-1 flex flex-col space-y-6 w-full px-4">
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 transition-all">
+<span class="material-icons-round">shopping_bag</span>
+</button>
+<button class="w-12 h-12 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center shadow-lg transform scale-110">
+<span class="material-icons-round">home</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 transition-all">
+<span class="material-icons-round">folder_open</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 transition-all">
+<span class="material-icons-round">book</span>
+</button>
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 transition-all">
+<span class="material-icons-round">grid_view</span>
+</button>
+</nav>
+<div class="flex flex-col space-y-6 items-center w-full px-4">
+<button class="w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:bg-white dark:hover:bg-gray-700 transition-all">
+<span class="material-icons-round">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-white dark:border-gray-700">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEzTovIAKgzZJgBh9JuK4jNqJTFH_gQQ1wT0gSaAIRS6OaOD8sDchhwV8SvD9tJLy8GYkbThn54SlEGQ_37duKqTiO0hwapZoWXVHVaCZuHSKZMzhY4xWPbn8dsYTtfdZNiB8_-pHUWqHvHneJOvTpZVWotzBKc44ojqqln1vbs2EjMnv98JhueBR8olOZ6q47cwK6f1GABv8Vma60dEWGT9crrf3bfnosRrDb_JHMdti84C8SqIehosmvoOR9AjFT3YXCxTv2quVs"/>
+</div>
+</div>
+</aside>
+<main class="flex-1 h-full overflow-y-auto p-8 lg:p-12 relative">
+<header class="flex justify-between items-center mb-10">
+<div class="flex items-center space-x-4">
+<button class="w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center text-gray-600 dark:text-gray-300 hover:shadow-md transition-all">
+<span class="material-icons-round">arrow_back</span>
+</button>
+<div>
+<h1 class="text-4xl lg:text-5xl font-display font-bold text-gray-900 dark:text-white mb-2">
+                        Class 11 Subjects
+                    </h1>
+<p class="text-gray-500 dark:text-gray-400">Select a subject to view study materials and notes.</p>
+</div>
+</div>
+<div class="hidden md:flex items-center space-x-4 bg-white dark:bg-gray-800 p-2 rounded-full shadow-sm border border-gray-100 dark:border-gray-700">
+<span class="material-icons-round text-gray-400 ml-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-64 text-gray-700 dark:text-gray-200" placeholder="Search subjects..." type="text"/>
+</div>
+</header>
+<div class="flex flex-wrap gap-4 mb-10">
+<button class="flex items-center space-x-2 px-5 py-3 bg-black dark:bg-white text-white dark:text-black rounded-full shadow-lg hover:transform hover:scale-105 transition-all">
+<span class="material-icons-round text-lg">grid_view</span>
+<span class="font-medium">All</span>
+</button>
+<button class="flex items-center space-x-2 px-5 py-3 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:shadow-sm transition-all">
+<span class="material-icons-round text-lg">science</span>
+<span class="font-medium">Science</span>
+</button>
+<button class="flex items-center space-x-2 px-5 py-3 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:shadow-sm transition-all">
+<span class="material-icons-round text-lg">calculate</span>
+<span class="font-medium">Math</span>
+</button>
+<button class="flex items-center space-x-2 px-5 py-3 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:shadow-sm transition-all">
+<span class="material-icons-round text-lg">translate</span>
+<span class="font-medium">Languages</span>
+</button>
+<button class="flex items-center space-x-2 px-5 py-3 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:shadow-sm transition-all">
+<span class="material-icons-round text-lg">history_edu</span>
+<span class="font-medium">Humanities</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<div class="group relative bg-[#fecaca] dark:bg-red-900/40 p-6 rounded-2xl transition-all hover:shadow-lg cursor-pointer flex flex-col justify-between h-64">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-white/60 dark:bg-black/20 rounded-lg backdrop-blur-sm">
+<span class="material-icons-round text-red-800 dark:text-red-200">bolt</span>
+</div>
+<div class="flex items-center space-x-1 bg-white/60 dark:bg-black/20 px-2 py-1 rounded-full text-xs font-bold text-gray-700 dark:text-gray-200">
+<span class="material-icons-round text-yellow-500 text-sm">star</span>
+<span>4.8</span>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Physics</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-2">Mechanics, Thermodynamics, and Electromagnetism concepts for advanced learners.</p>
+<div class="flex -space-x-2 overflow-hidden mb-2">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxFNoG9HVkEZPIcsHgwgiTT6z9KWs8uHeE07F7UvZ50eJvRF3GR8citx4xU2gJYkG6sqGCEvPB1l8mwDUl2yRcsyLxPNoaZCzTVl5UMzGQ-2YSMb07pTkpIGi1gttuTUUR74DENZP4mDSZZfvQBtVGv9ZcErwuA-bsV52ulnHAAHIX3yvyNTMx2ZTxtwE4c3gBJBAxjgKTMwMEauCWE1KelRbmXEQFHFiCEhgZIwN-2n1PxhHwQm6UQQN4M7sFPBVd6ko9K3S6bOTy"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxsZijvmSfujv_TKx_8u34sF4gWjEO262vCtSy7oYATFNlCgo8JY5u4FAd_pj3RwQ_3Wv7ZRyzw1i4MBVTIFI0Lielgm8ec49bxMoEzxB5GJRzr24MaBmLG92JBeCwbfUgLxL4nW1heQeAVnl0JEt5bl1iNA-j7Jtacddgl1Snky4PuUcLlD2HIZo084iHuGVaXWctHuB_kNXeg03IO04EAfjdiULrp-on3Cg2ntBSzIIsAFyMprP6ZG59VyZRvHFIkAldMxev6nUz"/>
+<div class="h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800 bg-white/50 flex items-center justify-center text-xs font-bold text-gray-600">+12</div>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 font-medium">24 Chapters • 156 Notes</p>
+</div>
+</div>
+<div class="group relative bg-[#fed7aa] dark:bg-orange-900/40 p-6 rounded-2xl transition-all hover:shadow-lg cursor-pointer flex flex-col justify-between h-64">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-white/60 dark:bg-black/20 rounded-lg backdrop-blur-sm">
+<span class="material-icons-round text-orange-800 dark:text-orange-200">science</span>
+</div>
+<div class="flex items-center space-x-1 bg-white/60 dark:bg-black/20 px-2 py-1 rounded-full text-xs font-bold text-gray-700 dark:text-gray-200">
+<span class="material-icons-round text-yellow-500 text-sm">star</span>
+<span>4.9</span>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Chemistry</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-2">Organic, Inorganic, and Physical Chemistry detailed notes and reactions.</p>
+<div class="flex -space-x-2 overflow-hidden mb-2">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlHc95VKbvypZw2fGjJFxKZ2Z0EU-WTjcmmbBArfbmX9tqA-KKCt8O4TM2Q2ZGXKjrm1nxrsNtFUrLIj098_tap6L_fe_wIeK4mrq5RPqVkA3QnJ9P5tyIUdmLgONooORG9alscwMYBkGtkSBZxnwzL7ZN-GQn8ZetGkSfnnhmSpp6c-Mzqj8EJLWIkHEuYaFrORr9WXyOsa9detG3Q9X_Cq5jOCNZxSMmobCtjCHg77YCiT4ahBqKOwQ-9rU-utiQU79CLa1Cpwox"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEf55y8zslJXs9c9VrqTV6Tc1xgyyWYL4WG0AjsHld8lnotaT-KX50iviDsUUDeknk9_AcV1x8CteoI_kuu7M8z4oaj-0m6_Pl1tz0N_OZW1_IKDnqpsjyO4urGuBy3TthObxDaVkSMVOJrOVdVtr1gvkDBXraFfC0D27wr0yZCT1WWJio34qYrHp8jMfD1BtI65z6UBs-tCKUyE6bH4ZZTjp4QwJUA13farTRUzRouWb95cD-LC2kY_fD0iW9Ac3p2NbTlL7aaYt4"/>
+<div class="h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800 bg-white/50 flex items-center justify-center text-xs font-bold text-gray-600">+8</div>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 font-medium">20 Chapters • 142 Notes</p>
+</div>
+</div>
+<div class="group relative bg-[#e9d5ff] dark:bg-purple-900/40 p-6 rounded-2xl transition-all hover:shadow-lg cursor-pointer flex flex-col justify-between h-64">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-white/60 dark:bg-black/20 rounded-lg backdrop-blur-sm">
+<span class="material-icons-round text-purple-800 dark:text-purple-200">functions</span>
+</div>
+<div class="flex items-center space-x-1 bg-white/60 dark:bg-black/20 px-2 py-1 rounded-full text-xs font-bold text-gray-700 dark:text-gray-200">
+<span class="material-icons-round text-yellow-500 text-sm">star</span>
+<span>5.0</span>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Mathematics</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-2">Calculus, Algebra, and Trigonometry problem sets and solutions.</p>
+<div class="flex -space-x-2 overflow-hidden mb-2">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIvAVA6BWy84JFbzL64-TYiKZeTo6TxrOha4eU_-1zK6qhtnHFG7WiuIT54Dz-Cl8_QTLyQCs_DZCSLIgNtYlRP4swx7d6DmmHI6jEoyY3DtRiuBWvCUo8wx6Up93CupYzI-5pe_koq2wFWJewdxWy4trr0zJTZuJ_NMLUU1docRHFez7hmHweGDOQFfpPlDExfp9OZFckIzSNWzMAX450dUegchJ2q90A96zgxIrOy4VHPgXu6dnX8T1kmslHY8Ks5_iLurb4pU0r"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiPbWympbKoYU4TLMOZsp1pCsI8L0lGhGU5UX-mFj_Ezo-8VTXuc8YdASwDnlOrAj_AvRdaZ83Vr8mfG7iYhwvRvWvlfDx3i7rpJxlMYHTAvViglRZNITxuZjS5zRNfLl0yvrJF2BK3Y2O0dmbpvxzjl9jk1DiZSkh36VsKLydI-FbhYyNRPV3RzqzDzfgyA36tXVoll5R1rflr6qRtkyrTYEX7iqLQfPmn-MlQ0IweB7WrPX6n3ol99H2aaZsxVD4lZUVkGuJ_d_a"/>
+<div class="h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800 bg-white/50 flex items-center justify-center text-xs font-bold text-gray-600">+25</div>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 font-medium">18 Chapters • 210 Notes</p>
+</div>
+</div>
+<div class="group relative bg-[#bbf7d0] dark:bg-green-900/40 p-6 rounded-2xl transition-all hover:shadow-lg cursor-pointer flex flex-col justify-between h-64">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-white/60 dark:bg-black/20 rounded-lg backdrop-blur-sm">
+<span class="material-icons-round text-green-800 dark:text-green-200">menu_book</span>
+</div>
+<div class="flex items-center space-x-1 bg-white/60 dark:bg-black/20 px-2 py-1 rounded-full text-xs font-bold text-gray-700 dark:text-gray-200">
+<span class="material-icons-round text-yellow-500 text-sm">star</span>
+<span>4.7</span>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">English Grammar</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-2">Mastering syntax, vocabulary, and composition skills.</p>
+<div class="flex -space-x-2 overflow-hidden mb-2">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgHQplspFLkUl2P4oF1SqUF8KRFAGxxjph756RvN4ub562xyGClEk4-UZ_K-WXF_Bi8suaOlIfVWZy6OT-mfjqL6ku-J8SfxQfBtxmataXCEeqbnSDQVz9r5tBwVTbEZVHqel6-HTCRECo1TzP_dS7AU_eXl6OIiFdBH5lzvtnVTFYJ7bEpTsXya7JiMqBYccpELeavGAd0ilom8372KdTyAYsRDyl9vCCDQyAzilV1WJvo3rp-JbwDmogxD8yD2UFndXTAwtvT7ET"/>
+<div class="h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800 bg-white/50 flex items-center justify-center text-xs font-bold text-gray-600">+5</div>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 font-medium">12 Chapters • 98 Notes</p>
+</div>
+</div>
+<div class="group relative bg-[#bfdbfe] dark:bg-blue-900/40 p-6 rounded-2xl transition-all hover:shadow-lg cursor-pointer flex flex-col justify-between h-64">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-white/60 dark:bg-black/20 rounded-lg backdrop-blur-sm">
+<span class="material-icons-round text-blue-800 dark:text-blue-200">biotech</span>
+</div>
+<div class="flex items-center space-x-1 bg-white/60 dark:bg-black/20 px-2 py-1 rounded-full text-xs font-bold text-gray-700 dark:text-gray-200">
+<span class="material-icons-round text-yellow-500 text-sm">star</span>
+<span>4.8</span>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Biology</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-2">Zoology and Botany comprehensive study materials.</p>
+<div class="flex -space-x-2 overflow-hidden mb-2">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4KBIjlQ2ykY69dz24miGWKHcMpMk1yFT_lDPJHnj2cLGnIj7kWGbo4lUauwzCYYm520wPZ48TgvQcfzVp7Mfn0P7tcwo71gIZJv8GjbAOuTlKDzSVxrWFdt-okoaeZtDasGK6v-rTuQPEG-KLxwgITwuYH68D51pYABvFh1dEYvqiuvMOYoGXh-9wwPu0BOl6LLOvqnhf4qGPMQrc8-_l8fpPecGeYQjl-efDLaAKIn0TLcTRzgRpiP_YN-xV8hQr60ET1Q9YoCAH"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBVE0JhKCwODAlAlpG_Wl2Cw2eXcfaIRWd7bdSOADJ5nf1kDdjO8nokK_uWLlXDEI_9XKben5kEPWFir1p0lzl7d5cOFzGvgwJxIo4D8R3MQ0LKC2BRS2WE2D73owPSTi25Hsd2140Yuxdq-falWbDxePdBmqsFLlXNnRTmTRpOtvPyODDSJ2BBkYCzH-GP1EGQ974hWBD4DAxNF5gyl91HGADr2w5ylkXjlwMnQJTNv1u3R1Qe9Q-ChhbXtXHMHisb35fdzqQBOoW"/>
+<div class="h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800 bg-white/50 flex items-center justify-center text-xs font-bold text-gray-600">+18</div>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 font-medium">22 Chapters • 175 Notes</p>
+</div>
+</div>
+<div class="group relative bg-[#fef08a] dark:bg-yellow-900/40 p-6 rounded-2xl transition-all hover:shadow-lg cursor-pointer flex flex-col justify-between h-64">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-white/60 dark:bg-black/20 rounded-lg backdrop-blur-sm">
+<span class="material-icons-round text-yellow-800 dark:text-yellow-200">computer</span>
+</div>
+<div class="flex items-center space-x-1 bg-white/60 dark:bg-black/20 px-2 py-1 rounded-full text-xs font-bold text-gray-700 dark:text-gray-200">
+<span class="material-icons-round text-yellow-500 text-sm">star</span>
+<span>4.9</span>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Computer Science</h3>
+<p class="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-2">Python programming, data structures, and database management.</p>
+<div class="flex -space-x-2 overflow-hidden mb-2">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT0iQ1HGXb5LJHJghp1E-lAmz4W5FPZJr-4hm-KSfBJUNEClyKJzXd05y1NqorVxEfbX-QXeFwDdN00LsnqGyG9gZefZmZhuF1U7m8F-menmn2WEJXVu_5cG09SLOtO3lGWJDSFhIti4Tc38qP3Zv1350UD23AsyqcwNPnf-DxRKfnbyIIh3O7CdhuSEkHB4D0CKoDvoUBpzenZJhHZ4CjQDo5tAEhqlwkhhjQ5XJ0f-VrFwtOLiTlRLYxX6adIRiDNjUoPbuZyCw7"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdVjBEbC7DVQ5BxH0AAGpJIcBC1CmA4H2kBrSwhr0T98YpUY7BIqcKKDzmD5L_Qoz5459U40YEozKyWa1AwZst-kAhmP6z_mSceycaibAmeDWnVjqh95hkkYD3RR4xPVUTfB2QtP8cjWUDNLweQrCYyFIAgxb5i442uC_nW2lf4uSab9ayQyv4JIn16XLDddC6V53k5zewazWookpBvP7tf2aqGYaPVT-mX-xQnyspjOdSZ4ayrqf2Ny-Aiv9ron5a1oTG-AXgPuHl"/>
+<div class="h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800 bg-white/50 flex items-center justify-center text-xs font-bold text-gray-600">+30</div>
+</div>
+<p class="text-xs text-gray-600 dark:text-gray-400 font-medium">15 Chapters • 130 Notes</p>
+</div>
+</div>
+</div>
+</main>
+<aside class="hidden lg:flex w-80 h-full bg-sidebar-light dark:bg-sidebar-dark flex-col p-8 space-y-8 overflow-y-auto flex-shrink-0 border-l border-gray-100 dark:border-gray-800">
+<div class="flex justify-between items-center">
+<button class="text-gray-500 hover:text-black dark:hover:text-white transition-colors relative">
+<span class="material-icons-round">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<button class="text-gray-500 hover:text-black dark:hover:text-white transition-colors">
+<span class="material-icons-round">settings</span>
+</button>
+</div>
+<div class="flex flex-col items-center">
+<div class="relative w-24 h-24 mb-4">
+<div class="absolute inset-0 bg-purple-200 dark:bg-purple-900/50 rounded-full transform -rotate-6"></div>
+<img alt="Annette Black" class="relative w-full h-full object-cover rounded-full border-4 border-white dark:border-gray-800 shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0NBiCxNG18ca4rXPUk8Cqzm5oMrTSilB3jDvl8_0ZXY908AGSZcDLFlZvJZYuF2VdWNRln9aOHkoJ5dnouHaooNC_LjP2oCFLKGJd3IjT0oJI8kb-ajJ4_8C8tOLTgvRzFleeMSw2Vsky7fu7osLo_K4_lbH-72a5u0tYQ-WZDvGAH9ZITVa8iVKXAzURVr_nQlGsLTAAK2SeE-7qwt7jQDlN1NKzj-Dilcp_xhM5Xjh_-hmpPKhLFzM1cReMcF81dFjaRFZlmu18"/>
+</div>
+<h2 class="text-xl font-bold text-gray-900 dark:text-white">Annette Black</h2>
+<p class="text-sm text-gray-500 dark:text-gray-400">Class 11 Student</p>
+</div>
+<div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="p-2 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300">
+<span class="material-icons-round text-lg">group</span>
+</div>
+<div>
+<p class="text-sm font-bold text-gray-900 dark:text-white">274 Friends</p>
+</div>
+</div>
+<div class="flex -space-x-2">
+<img alt="" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWKwAje5FxUFtcVdI1RHlTiJV1zKGjNpu3S4Ttc32TNzxLlKzvYF7hrEi6sHArsGYc0fYqlVK21YVofVGHuBo3rO1zLqseHCR7MMoCidXT0dHnTC1zoSFgY0MmJes2lnkFhPc6QZD_NmgyFqku9QTPs6y-_H2RIpTsULgwrs6p4zaiiSiw_pmJI-LkU3-Y814A4R_ADLKm8G2ln9A1RuAbEemjoE0tQe3zuNrXazQqn1KBW6_xpaEKzsoD78yu5SyoPVVFPSKFky3x"/>
+<img alt="" class="inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH0fu978Y8J4h7X8sm_wN8hCUTcCYozMk9XSHEbb7pHBBQYqepoBfa2eVkG16sdhBBAAum8tROlyithKiWifnLgkAGScD6Gs82dDGK7nvLCH-YFvdcrv6thWAV8quLXo5PdXePz6Cc92iILkxsjVIcGVdByU0yL7KXPtvJ82l20jYLIU4xqLXtyjh4xFEz404qwwR7WKcMnrxux2RsuvhyDWXmswqUeV_SdStxtL8mhRaHpJ6MxOBBEvymTDdOblBxRfT5nuCSXT8W"/>
+<button class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-xs text-gray-500 dark:text-gray-400 font-bold ring-2 ring-white dark:ring-gray-800">&gt;</button>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<div>
+<p class="text-xs text-gray-400 uppercase tracking-wide">Activity</p>
+<div class="flex items-center space-x-2 mt-1">
+<span class="text-2xl font-bold text-gray-900 dark:text-white">3.5h</span>
+<span class="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 text-xs px-2 py-0.5 rounded-md font-medium">👍 Great result!</span>
+</div>
+</div>
+<button class="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 flex items-center">
+                    Year <span class="material-icons-round text-sm ml-1">expand_more</span>
+</button>
+</div>
+<div class="flex items-end justify-between h-32 space-x-2">
+<div class="flex flex-col items-center w-full group">
+<div class="w-full bg-red-100 dark:bg-red-900/30 h-16 rounded-t-lg mb-1 group-hover:bg-red-200 transition-colors"></div>
+<span class="text-[10px] text-gray-400">Jan</span>
+</div>
+<div class="flex flex-col items-center w-full group">
+<div class="w-full bg-orange-100 dark:bg-orange-900/30 h-20 rounded-t-lg mb-1 group-hover:bg-orange-200 transition-colors"></div>
+<span class="text-[10px] text-gray-400">Jan</span>
+</div>
+<div class="flex flex-col items-center w-full group">
+<div class="w-full bg-green-100 dark:bg-green-900/30 h-12 rounded-t-lg mb-1 group-hover:bg-green-200 transition-colors"></div>
+<span class="text-[10px] text-gray-400">Aug</span>
+</div>
+<div class="flex flex-col items-center w-full group">
+<div class="w-full bg-purple-100 dark:bg-purple-900/30 h-24 rounded-t-lg mb-1 group-hover:bg-purple-200 transition-colors"></div>
+<span class="text-[10px] text-gray-400">Sep</span>
+</div>
+<div class="flex flex-col items-center w-full group">
+<div class="w-full bg-blue-100 dark:bg-blue-900/30 h-10 rounded-t-lg mb-1 group-hover:bg-blue-200 transition-colors"></div>
+<span class="text-[10px] text-gray-400">Oct</span>
+</div>
+<div class="flex flex-col items-center w-full group">
+<div class="w-full bg-pink-100 dark:bg-pink-900/30 h-14 rounded-t-lg mb-1 group-hover:bg-pink-200 transition-colors"></div>
+<span class="text-[10px] text-gray-400">Nov</span>
+</div>
+<div class="flex flex-col items-center w-full relative">
+<div class="w-full bg-black dark:bg-white h-28 rounded-xl mb-1 border-2 border-black dark:border-white relative overflow-hidden">
+<div class="absolute bottom-0 w-full h-[30%] bg-green-300/50"></div>
+<div class="absolute bottom-[30%] w-full h-[20%] bg-purple-300/50"></div>
+<div class="absolute bottom-[50%] w-full h-[25%] bg-blue-300/50"></div>
+<div class="absolute bottom-[75%] w-full h-[25%] bg-orange-300/50"></div>
+</div>
+<span class="text-[10px] font-bold text-black dark:text-white bg-black dark:bg-white text-white dark:text-black px-1.5 py-0.5 rounded-full absolute -bottom-6">Dec</span>
+</div>
+</div>
+</div>
+<div>
+<h3 class="font-bold text-gray-900 dark:text-white mb-4">My courses</h3>
+<div class="space-y-4">
+<div class="bg-[#fecaca] dark:bg-red-900/40 p-4 rounded-xl flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="p-2 bg-white/60 dark:bg-black/20 rounded-lg">
+<span class="material-icons-round text-red-800 dark:text-red-200 text-sm">bolt</span>
+</div>
+<div>
+<p class="font-bold text-sm text-gray-900 dark:text-white">Physics</p>
+<p class="text-xs text-gray-600 dark:text-gray-400">Chapter 4: Optics</p>
+</div>
+</div>
+<span class="text-xs font-bold bg-white/50 dark:bg-black/20 px-2 py-1 rounded-md">85%</span>
+</div>
+<div class="bg-[#e9d5ff] dark:bg-purple-900/40 p-4 rounded-xl flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="p-2 bg-white/60 dark:bg-black/20 rounded-lg">
+<span class="material-icons-round text-purple-800 dark:text-purple-200 text-sm">functions</span>
+</div>
+<div>
+<p class="font-bold text-sm text-gray-900 dark:text-white">Math</p>
+<p class="text-xs text-gray-600 dark:text-gray-400">Calculus II</p>
+</div>
+</div>
+<span class="text-xs font-bold bg-white/50 dark:bg-black/20 px-2 py-1 rounded-md">40%</span>
+</div>
+</div>
+</div>
+</aside>
+
+</body></html>

@@ -1,13 +1,136 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useData } from '../context/DataContext';
-import { userProfile as dummyProfile } from '../data/dummyData'; // keep dummy for stats for now
 
 export default function Profile() {
     const navigate = useNavigate();
-    const { user } = useData();
+    const { user, getItemsByParent, getMyPurchases, usageStats } = useData();
     const [avatarBroken, setAvatarBroken] = useState(false);
+    const [courseRows, setCourseRows] = useState([]);
+    const [totalPurchasedNotes, setTotalPurchasedNotes] = useState(0);
     const avatar = user?.picture || '';
+    const userName = user?.name || 'Student';
+
+    useEffect(() => {
+        let ignore = false;
+
+        const subjectMeta = (subject) => {
+            const s = String(subject || '').toLowerCase();
+            if (s.includes('math')) return { icon: 'functions', color: 'bg-accent-neon', textWhite: false };
+            if (s.includes('phys')) return { icon: 'science', color: 'bg-accent-blue', textWhite: true };
+            if (s.includes('chem')) return { icon: 'biotech', color: 'bg-accent-orange', textWhite: false };
+            if (s.includes('bio')) return { icon: 'vaccines', color: 'bg-accent-green', textWhite: false };
+            if (s.includes('computer')) return { icon: 'computer', color: 'bg-accent-purple', textWhite: true };
+            if (s.includes('english')) return { icon: 'menu_book', color: 'bg-accent-pink', textWhite: false };
+            return { icon: 'folder', color: 'bg-accent-neon', textWhite: false };
+        };
+
+        const loadProfileData = async () => {
+            try {
+                const [purchases, rootItems] = await Promise.all([
+                    getMyPurchases(),
+                    getItemsByParent(null),
+                ]);
+                if (ignore) return;
+
+                const safePurchases = Array.isArray(purchases) ? purchases : [];
+                setTotalPurchasedNotes(safePurchases.length);
+
+                // Build a full file list with class/subject context from folder hierarchy.
+                const files = [];
+                const walk = async (parentId, className = '', subjectName = '') => {
+                    const children = parentId === null ? rootItems : await getItemsByParent(parentId);
+                    for (const item of children || []) {
+                        if (item.type === 'folder') {
+                            if (!className) {
+                                await walk(item.id, item.name, '');
+                            } else if (!subjectName) {
+                                await walk(item.id, className, item.name);
+                            } else {
+                                await walk(item.id, className, subjectName);
+                            }
+                        } else if (item.type === 'file') {
+                            files.push({
+                                className: className || 'General',
+                                subjectName: subjectName || className || 'General',
+                                id: item.id,
+                            });
+                        }
+                    }
+                };
+                await walk(null);
+
+                const totalByCourse = {};
+                files.forEach((f) => {
+                    const key = `${f.className}::${f.subjectName}`;
+                    totalByCourse[key] = (totalByCourse[key] || 0) + 1;
+                });
+
+                const purchasedByCourse = {};
+                safePurchases.forEach((p) => {
+                    const c = p.className || 'General';
+                    const s = p.subjectName || c || 'General';
+                    const key = `${c}::${s}`;
+                    purchasedByCourse[key] = (purchasedByCourse[key] || 0) + 1;
+                });
+
+                const rows = Object.keys(purchasedByCourse)
+                    .map((key) => {
+                        const [className, subjectName] = key.split('::');
+                        const purchasedCount = purchasedByCourse[key] || 0;
+                        const totalCount = totalByCourse[key] || purchasedCount || 1;
+                        const progress = Math.max(1, Math.min(100, Math.round((purchasedCount / totalCount) * 100)));
+                        return {
+                            key,
+                            className,
+                            subjectName,
+                            progress,
+                            ...subjectMeta(subjectName),
+                        };
+                    })
+                    .sort((a, b) => b.progress - a.progress);
+
+                setCourseRows(rows);
+            } catch {
+                if (!ignore) {
+                    setCourseRows([]);
+                    setTotalPurchasedNotes(0);
+                }
+            }
+        };
+
+        loadProfileData();
+        return () => {
+            ignore = true;
+        };
+    }, [getItemsByParent, getMyPurchases]);
+
+    const studyHours = useMemo(() => {
+        const totalSeconds = Object.values(usageStats || {}).reduce((acc, val) => acc + Number(val || 0), 0);
+        return (totalSeconds / 3600).toFixed(1);
+    }, [usageStats]);
+
+    const streakDays = useMemo(() => {
+        const hasStudy = (date) => {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            const key = `${y}-${m}-${d}`;
+            return Number(usageStats?.[key] || 0) > 0;
+        };
+        let streak = 0;
+        const cursor = new Date();
+        while (hasStudy(cursor)) {
+            streak += 1;
+            cursor.setDate(cursor.getDate() - 1);
+        }
+        return streak;
+    }, [usageStats]);
+
+    const joinedText = useMemo(() => {
+        const now = new Date();
+        return now.toLocaleString('en-US', { month: 'short', year: 'numeric' });
+    }, []);
 
     return (
         <div className="max-w-5xl mx-auto w-full pb-20 md:pb-8 animate-fade-in animate-slide-up animation-delay-100">
@@ -38,7 +161,7 @@ export default function Profile() {
 
                 <div className="absolute top-4 right-4">
                     <span className="bg-black text-white px-4 py-2 font-black uppercase tracking-widest text-sm shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] border-2 border-white">
-                        {dummyProfile.plan} PLAN
+                        Student PLAN
                     </span>
                 </div>
             </div>
@@ -48,13 +171,13 @@ export default function Profile() {
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4 border-b-4 border-black dark:border-white pb-6">
                     <div>
                         <h1 className="text-4xl md:text-6xl font-display font-black tracking-tight uppercase text-black dark:text-white leading-none">
-                            {user?.name || 'Student'}
+                            {userName}
                         </h1>
                         <p className="text-xl md:text-2xl font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400 mt-2">
                             {user?.student_class || 'Class Unknown'}
                         </p>
                         <p className="text-sm font-bold uppercase tracking-wide text-gray-500 mt-1 flex items-center gap-1">
-                            <span className="material-icons-round text-sm">calendar_month</span> Joined {dummyProfile.joined}
+                            <span className="material-icons-round text-sm">calendar_month</span> Joined {joinedText}
                         </p>
                     </div>
                     <button onClick={() => navigate('/setup-profile')} className="px-6 py-3 bg-white dark:bg-black text-black dark:text-white font-black border-2 border-black dark:border-white uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1 hover:translate-x-1 active:translate-y-1 active:translate-x-1 hover:shadow-none transition-all flex items-center gap-2">
@@ -66,19 +189,19 @@ export default function Profile() {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                     <div className="bg-accent-neon border-4 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-transform group">
                         <span className="material-icons-round text-4xl mb-2 group-hover:scale-110 transition-transform origin-left">menu_book</span>
-                        <h3 className="text-5xl font-display font-black">{dummyProfile.stats.totalNotes}</h3>
+                        <h3 className="text-5xl font-display font-black">{totalPurchasedNotes}</h3>
                         <p className="text-sm font-bold uppercase tracking-widest mt-1 text-black/70">Notes Saved</p>
                     </div>
 
                     <div className="bg-accent-pink border-4 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-transform group">
                         <span className="material-icons-round text-4xl mb-2 group-hover:scale-110 transition-transform origin-left">schedule</span>
-                        <h3 className="text-5xl font-display font-black">{dummyProfile.stats.studyHours}<span className="text-2xl">H</span></h3>
+                        <h3 className="text-5xl font-display font-black">{studyHours}<span className="text-2xl">H</span></h3>
                         <p className="text-sm font-bold uppercase tracking-widest mt-1 text-black/70">Study Hours</p>
                     </div>
 
                     <div className="col-span-2 md:col-span-1 bg-accent-yellow border-4 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-transform group">
                         <span className="material-icons-round text-4xl mb-2 group-hover:scale-110 transition-transform origin-left">local_fire_department</span>
-                        <h3 className="text-5xl font-display font-black">{dummyProfile.stats.streak} <span className="text-2xl">DAYS</span></h3>
+                        <h3 className="text-5xl font-display font-black">{streakDays} <span className="text-2xl">DAYS</span></h3>
                         <p className="text-sm font-bold uppercase tracking-widest mt-1 text-black/70">Current Streak</p>
                     </div>
                 </div>
@@ -91,15 +214,20 @@ export default function Profile() {
                     </div>
 
                     <div className="space-y-6">
-                        {dummyProfile.courses.map((course, idx) => (
-                            <div key={idx} className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 p-4 border-2 border-black dark:border-white hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors group cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-0.5">
+                        {courseRows.length === 0 && (
+                            <div className="p-4 border-2 border-black dark:border-white bg-gray-50 dark:bg-gray-900">
+                                <p className="text-sm font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300">No active courses yet. Buy a note to see real course progress here.</p>
+                            </div>
+                        )}
+                        {courseRows.map((course) => (
+                            <div key={course.key} className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 p-4 border-2 border-black dark:border-white hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors group cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-0.5">
                                 <div className="flex items-center gap-4 w-full md:w-auto">
                                     <div className={`w-16 h-16 ${course.color} border-2 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:rotate-6 transition-transform`}>
                                         <span className={`material-icons-round text-3xl ${course.textWhite ? 'text-white' : 'text-black'}`}>{course.icon}</span>
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-black uppercase tracking-wide text-black dark:text-white">{course.name}</h4>
-                                        <p className="text-sm font-bold uppercase text-gray-500">{course.subject}</p>
+                                        <h4 className="text-xl font-black uppercase tracking-wide text-black dark:text-white">{course.subjectName}</h4>
+                                        <p className="text-sm font-bold uppercase text-gray-500">{course.className}</p>
                                     </div>
                                 </div>
                                 <div className="w-full md:w-1/3 flex items-center gap-4">

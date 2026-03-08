@@ -141,11 +141,23 @@ export default function Login() {
                                     required
                                 >
                                     <option value="">Select class</option>
+                                    <option>Nursery</option>
+                                    <option>LKG</option>
+                                    <option>UKG</option>
+                                    <option>Class 1</option>
+                                    <option>Class 2</option>
+                                    <option>Class 3</option>
+                                    <option>Class 4</option>
+                                    <option>Class 5</option>
+                                    <option>Class 6</option>
+                                    <option>Class 7</option>
+                                    <option>Class 8</option>
                                     <option>Class 9</option>
                                     <option>Class 10</option>
                                     <option>Class 11</option>
                                     <option>Class 12</option>
                                     <option>University</option>
+                                    <option>Other</option>
                                 </select>
                                 <input
                                     type="file"
@@ -164,29 +176,32 @@ export default function Login() {
                         </button>
                     </form>
 
-                    {mode === 'login' && (
-                        <>
-                            <div className="flex items-center gap-3">
-                                <div className="h-[2px] bg-black/20 flex-1" />
-                                <span className="font-mono text-xs font-bold uppercase tracking-widest text-black/60">OR</span>
-                                <div className="h-[2px] bg-black/20 flex-1" />
-                            </div>
+                    <div className="flex items-center gap-3">
+                        <div className="h-[2px] bg-black/20 flex-1" />
+                        <span className="font-mono text-xs font-bold uppercase tracking-widest text-black/60">OR</span>
+                        <div className="h-[2px] bg-black/20 flex-1" />
+                    </div>
 
-                            <div className="flex justify-center w-full">
-                                <GoogleLogin
-                                    onSuccess={handleGoogleSuccess}
-                                    onError={() => {
-                                        console.error('Google Login Failed');
-                                        alert('Failed to connect to Google.');
-                                    }}
-                                    theme="filled_black"
-                                    shape="rectangular"
-                                    size="large"
-                                    text="continue_with"
-                                />
-                            </div>
-                        </>
-                    )}
+                    <div className="space-y-2">
+                        {mode === 'signup' && (
+                            <p className="text-center font-mono text-[11px] font-bold uppercase tracking-wider text-black/60">
+                                Sign up instantly with Google
+                            </p>
+                        )}
+                        <div className="flex justify-center w-full">
+                            <GoogleLogin
+                                onSuccess={handleGoogleSuccess}
+                                onError={() => {
+                                    console.error('Google Login Failed');
+                                    alert('Failed to connect to Google.');
+                                }}
+                                theme="filled_black"
+                                shape="rectangular"
+                                size="large"
+                                text="continue_with"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

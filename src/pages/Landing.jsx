@@ -42,12 +42,12 @@ export default function Landing() {
                             </div>
                             <div className="mt-6">
                                 <div className="flex flex-wrap gap-3">
-                                    <button
-                                        onClick={() => navigate('/login')}
-                                        className="px-5 py-3 bg-black text-white border-2 border-black font-display font-black tracking-wide shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 transition-all"
-                                    >
-                                        Explore Notes
-                                    </button>
+                                <button
+                                    onClick={() => navigate('/login')}
+                                    className="px-5 py-3 bg-accent-yellow text-black border-2 border-black font-display font-black tracking-wide shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 transition-all"
+                                >
+                                    Explore Notes
+                                </button>
                                     <button
                                         onClick={() => navigate('/login')}
                                         className="px-5 py-3 bg-white text-black border-2 border-black font-display font-black tracking-wide shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 transition-all"
@@ -62,20 +62,20 @@ export default function Landing() {
                         </div>
 
                         <div className="relative h-full min-h-[460px]">
-                            <div className="border-2 border-black p-4 bg-accent-yellow shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 transition-all">
-                                <p className="font-display font-black text-2xl">How it helps</p>
+                            <div className="border-2 border-black p-4 bg-white text-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:-translate-x-0.5 transition-all">
+                                <p className="font-display font-black text-2xl text-black">How it helps</p>
                                 <ul className="mt-4 space-y-2 font-mono text-xs font-bold tracking-wide leading-relaxed text-black">
-                                    <li>Class-wise organized library</li>
-                                    <li>Subject-wise focused PDFs</li>
-                                    <li>Preview before you pay</li>
-                                    <li>One-time payment, unlimited re-open</li>
-                                    <li>Fast search by chapter and topic</li>
+                                    <li><span className="bg-black text-white px-1">Class-wise</span> organized library</li>
+                                    <li><span className="bg-black text-white px-1">Subject-wise</span> focused PDFs</li>
+                                    <li><span className="bg-black text-white px-1">Preview</span> before you pay</li>
+                                    <li><span className="bg-black text-white px-1">One-time payment</span>, unlimited re-open</li>
+                                    <li>Fast search by <span className="bg-black text-white px-1">chapter and topic</span></li>
                                 </ul>
                             </div>
                             <img
                                 src="/duck.jpeg"
                                 alt="Duck illustration"
-                                className="hidden md:block absolute right-0 bottom-[-39.3px] w-52 lg:w-64 object-contain drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]"
+                                className="hidden md:block absolute right-0 bottom-[-39.3px] w-[80%] min-w-[200px] object-contain drop-shadow-[3px_3px_0_rgba(0,0,0,0.35)]"
                             />
                         </div>
                     </div>

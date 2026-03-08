@@ -30,3 +30,11 @@
 .dark ::-webkit-scrollbar-track {
   border-left: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+html.high-contrast {
+  filter: contrast(1.15) saturate(1.05);
+}
+
+html.high-contrast * {
+  text-shadow: none !important;
+}

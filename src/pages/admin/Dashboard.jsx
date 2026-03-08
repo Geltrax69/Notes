@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
+import AdminSidebar from './AdminSidebar';
 const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api';
 
 function computeFinalPrice(price, discountEnabled, discountPercent) {
@@ -10,7 +11,7 @@ function computeFinalPrice(price, discountEnabled, discountPercent) {
 }
 
 export default function AdminDashboard() {
-    const { adminUser, logoutAdmin, getItemsByParent, getItemById, createFolder, uploadFile, updateFilePrice, deleteItem } = useData();
+    const { adminUser, getItemsByParent, getItemById, createFolder, uploadFile, updateFilePrice, deleteItem } = useData();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -32,6 +33,7 @@ export default function AdminDashboard() {
         users_with_purchases: 0,
         total_purchases: 0,
     });
+    const [recentPurchases, setRecentPurchases] = useState([]);
     const [error, setError] = useState('');
 
     const searchParams = new URLSearchParams(location.search);
@@ -79,12 +81,25 @@ export default function AdminDashboard() {
         };
     }, [adminUser]);
 
-    if (!adminUser) return null;
+    useEffect(() => {
+        let ignore = false;
+        const loadRecentPurchases = async () => {
+            try {
+                const response = await fetch(`${API_BASE}/admin/recent-purchases/?limit=5`);
+                if (!response.ok) return;
+                const data = await response.json();
+                if (!ignore) setRecentPurchases(data || []);
+            } catch {
+                // Keep dashboard usable even if this endpoint fails.
+            }
+        };
+        if (adminUser) loadRecentPurchases();
+        return () => {
+            ignore = true;
+        };
+    }, [adminUser]);
 
-    const handleLogout = () => {
-        logoutAdmin();
-        navigate('/');
-    };
+    if (!adminUser) return null;
 
     const confirmCreateFolder = async (e) => {
         e.preventDefault();
@@ -165,38 +180,31 @@ export default function AdminDashboard() {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 font-sans p-4 md:p-8 text-black dark:text-white">
-            <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
-                <div>
-                    <h1 className="text-4xl md:text-5xl font-display font-black capitalize tracking-tighter flex items-center gap-3">
-                        <span className="material-icons-round text-accent-red text-5xl">admin_panel_settings</span>
-                        Admin Dashboard
-                    </h1>
-                    <div className="flex items-center gap-2 mt-2 font-bold capitalize text-xs tracking-widest opacity-60">
-                        <span className="cursor-pointer hover:underline" onClick={() => navigate('/admin')}>Root</span>
-                        {currentFolder && (
-                            <>
-                                <span className="material-icons-round text-sm">chevron_right</span>
-                                <span>{currentFolder.name}</span>
-                            </>
-                        )}
-                    </div>
-                </div>
-                <div className="flex gap-4">
-                    <button onClick={() => navigate('/')} className="px-6 py-3 bg-white text-black border-2 border-black font-bold capitalize text-sm flex items-center gap-2 shadow-brutal hover:bg-black hover:text-white transition-colors active:translate-y-1 active:translate-x-1 active:shadow-none">
-                        <span className="material-icons-round text-lg">public</span> View Site
-                    </button>
-                    <button onClick={handleLogout} className="px-6 py-3 bg-accent-red text-black border-2 border-black font-bold capitalize text-sm flex items-center gap-2 shadow-brutal hover:bg-black hover:text-white transition-colors active:translate-y-1 active:translate-x-1 active:shadow-none">
-                        <span className="material-icons-round text-lg">logout</span> Logout
-                    </button>
-                </div>
-            </header>
+            <div className="flex flex-col md:flex-row gap-6">
+                <AdminSidebar />
+                <main className="flex-1 min-w-0">
+                    <header className="mb-10">
+                        <h1 className="text-4xl md:text-5xl font-display font-black capitalize tracking-tighter flex items-center gap-3">
+                            <span className="material-icons-round text-accent-red text-5xl">admin_panel_settings</span>
+                            Admin Dashboard
+                        </h1>
+                        <div className="flex items-center gap-2 mt-2 font-bold capitalize text-xs tracking-widest opacity-60">
+                            <span className="cursor-pointer hover:underline" onClick={() => navigate('/admin')}>Root</span>
+                            {currentFolder && (
+                                <>
+                                    <span className="material-icons-round text-sm">chevron_right</span>
+                                    <span>{currentFolder.name}</span>
+                                </>
+                            )}
+                        </div>
+                    </header>
 
-            {error && (
-                <div className="mb-6 p-4 border-2 border-black bg-red-100">
-                    <p className="font-black text-sm tracking-wide">Request failed</p>
-                    <p className="text-sm mt-1 break-words">{error}</p>
-                </div>
-            )}
+                    {error && (
+                        <div className="mb-6 p-4 border-2 border-black bg-red-100">
+                            <p className="font-black text-sm tracking-wide">Request failed</p>
+                            <p className="text-sm mt-1 break-words">{error}</p>
+                        </div>
+                    )}
 
             <div className="sticky top-0 z-20 bg-gray-50 dark:bg-gray-900 py-3 flex flex-wrap gap-4 mb-8">
                 {currentFolder && (
@@ -233,6 +241,47 @@ export default function AdminDashboard() {
                     <p className="text-[10px] font-bold uppercase tracking-widest opacity-70">Notes Purchased</p>
                     <p className="text-3xl font-display font-black mt-1">{stats.total_purchases}</p>
                 </div>
+            </div>
+
+            <div className="mb-10 border-2 border-black bg-white p-4 shadow-brutal overflow-x-auto">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                    <h2 className="text-2xl font-display font-black capitalize">Recent purchases</h2>
+                    <button
+                        onClick={() => navigate('/admin/purchases')}
+                        className="px-4 py-2 bg-white text-black border-2 border-black font-bold text-xs tracking-widest hover:bg-black hover:text-white transition-colors"
+                    >
+                        View all
+                    </button>
+                </div>
+                {recentPurchases.length === 0 ? (
+                    <p className="text-xs font-bold capitalize tracking-widest opacity-60">No purchases yet.</p>
+                ) : (
+                    <table className="min-w-full border-2 border-black text-black">
+                        <thead className="bg-gray-100 border-b-2 border-black">
+                            <tr>
+                                <th className="text-left p-2 text-xs font-bold uppercase">Name</th>
+                                <th className="text-left p-2 text-xs font-bold uppercase">Email</th>
+                                <th className="text-left p-2 text-xs font-bold uppercase">Purchased note</th>
+                                <th className="text-left p-2 text-xs font-bold uppercase">Amount</th>
+                                <th className="text-left p-2 text-xs font-bold uppercase">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {recentPurchases.map((p) => (
+                                <tr key={p.id} className="border-b border-black/20">
+                                    <td className="p-2 text-sm font-bold">{p.name}</td>
+                                    <td className="p-2 text-sm">{p.email}</td>
+                                    <td className="p-2 text-sm">
+                                        <div className="font-bold">{p.note_name}</div>
+                                        <div className="text-xs opacity-70">{p.note_path}</div>
+                                    </td>
+                                    <td className="p-2 text-sm font-black">₹{p.amount}</td>
+                                    <td className="p-2 text-xs">{new Date(p.created_at).toLocaleString()}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
 
             {items.length === 0 ? (
@@ -387,6 +436,8 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             )}
+                </main>
+            </div>
         </div>
     );
 }

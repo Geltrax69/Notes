@@ -14,6 +14,7 @@ import SetupProfile from './pages/SetupProfile';
 import Landing from './pages/Landing';
 import AdminLogin from './pages/admin/Login';
 import AdminDashboard from './pages/admin/Dashboard';
+import AdminPurchases from './pages/admin/Purchases';
 
 // Custom Private Route component to protect application routes
 const PrivateRoute = ({ children }) => {
@@ -41,6 +42,7 @@ export default function App() {
 
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/purchases" element={<AdminPurchases />} />
 
           <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
             <Route path="/home" element={<Home />} />

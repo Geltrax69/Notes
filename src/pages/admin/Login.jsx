@@ -5,6 +5,7 @@ import { useData } from '../../context/DataContext';
 export default function AdminLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const { loginAdmin } = useData();
@@ -48,14 +49,24 @@ export default function AdminLogin() {
                     </div>
                     <div>
                         <label className="block font-bold text-sm tracking-widest uppercase text-black mb-2">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full bg-white border-2 border-black p-4 font-bold text-black focus:outline-none focus:ring-4 focus:ring-accent-neon transition-all"
-                            placeholder="••••••••"
-                            required
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full bg-white border-2 border-black p-4 pr-14 font-bold text-black focus:outline-none focus:ring-4 focus:ring-accent-neon transition-all"
+                                placeholder="••••••••"
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword((prev) => !prev)}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 border-2 border-black bg-white text-black flex items-center justify-center"
+                                title={showPassword ? 'Hide password' : 'Show password'}
+                            >
+                                <span className="material-icons-round text-xl">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                            </button>
+                        </div>
                     </div>
                     <button
                         type="submit"

@@ -205,7 +205,15 @@ export const DataProvider = ({ children }) => {
         return created;
     };
 
-    const uploadFile = async (name, parentId, file, price = 499, discountEnabled = false, discountPercent = 0) => {
+    const uploadFile = async (
+        name,
+        parentId,
+        file,
+        price = 499,
+        discountEnabled = false,
+        discountPercent = 0,
+        onProgress = null
+    ) => {
         const form = new FormData();
         form.append('name', name);
         if (parentId !== null && parentId !== undefined) {
@@ -216,12 +224,45 @@ export const DataProvider = ({ children }) => {
         form.append('discountEnabled', String(discountEnabled));
         form.append('discountPercent', String(discountPercent));
 
-        const response = await fetch(`${API_BASE}/files/`, {
-            method: 'POST',
-            headers: getAuthHeaders(),
-            body: form
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `${API_BASE}/files/`);
+
+            const authHeaders = getAuthHeaders();
+            if (authHeaders.Authorization) {
+                xhr.setRequestHeader('Authorization', authHeaders.Authorization);
+            }
+
+            if (typeof onProgress === 'function') {
+                xhr.upload.onprogress = (event) => {
+                    if (!event.lengthComputable) return;
+                    const percent = Math.min(100, Math.round((event.loaded / event.total) * 100));
+                    onProgress(percent);
+                };
+            }
+
+            xhr.onload = async () => {
+                const responseLike = {
+                    ok: xhr.status >= 200 && xhr.status < 300,
+                    json: async () => {
+                        try {
+                            return xhr.responseText ? JSON.parse(xhr.responseText) : {};
+                        } catch {
+                            return {};
+                        }
+                    },
+                };
+                try {
+                    const data = await parseApiResponse(responseLike);
+                    resolve(data);
+                } catch (error) {
+                    reject(error);
+                }
+            };
+
+            xhr.onerror = () => reject(new Error('Upload failed. Please check your network and try again.'));
+            xhr.send(form);
         });
-        return parseApiResponse(response);
     };
 
     const deleteItem = async (id) => {

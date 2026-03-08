@@ -35,6 +35,9 @@ export default function AdminDashboard() {
     });
     const [recentPurchases, setRecentPurchases] = useState([]);
     const [error, setError] = useState('');
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadSuccessMessage, setUploadSuccessMessage] = useState('');
 
     const searchParams = new URLSearchParams(location.search);
     const folderId = searchParams.get('folder') || null;
@@ -120,13 +123,16 @@ export default function AdminDashboard() {
         if (!inputValue.trim() || !selectedFile) return;
 
         try {
+            setIsUploading(true);
+            setUploadProgress(0);
             await uploadFile(
                 inputValue.trim(),
                 folderId,
                 selectedFile,
                 Number(priceValue || 0),
                 discountEnabled,
-                Number(discountPercent || 0)
+                Number(discountPercent || 0),
+                (percent) => setUploadProgress(percent)
             );
             setIsFileModalOpen(false);
             setInputValue('');
@@ -134,9 +140,14 @@ export default function AdminDashboard() {
             setPriceValue('499');
             setDiscountEnabled(false);
             setDiscountPercent('0');
+            setUploadSuccessMessage('PDF uploaded successfully.');
+            setTimeout(() => setUploadSuccessMessage(''), 3000);
             await loadCurrentView();
         } catch (err) {
             setError(err.message || 'Upload failed');
+        } finally {
+            setIsUploading(false);
+            setUploadProgress(0);
         }
     };
 
@@ -205,6 +216,12 @@ export default function AdminDashboard() {
                             <p className="text-sm mt-1 break-words">{error}</p>
                         </div>
                     )}
+                    {uploadSuccessMessage && (
+                        <div className="mb-6 p-4 border-2 border-black bg-green-100">
+                            <p className="font-black text-sm tracking-wide">Success</p>
+                            <p className="text-sm mt-1 break-words">{uploadSuccessMessage}</p>
+                        </div>
+                    )}
 
             <div className="sticky top-0 z-20 bg-gray-50 dark:bg-gray-900 py-3 flex flex-wrap gap-4 mb-8">
                 {currentFolder && (
@@ -215,7 +232,7 @@ export default function AdminDashboard() {
                 <button onClick={() => { setInputValue(''); setIsFolderModalOpen(true); }} className="min-w-[220px] px-6 py-3 bg-accent-neon text-black border-2 border-black font-black capitalize tracking-widest text-sm flex items-center justify-center gap-2 shadow-brutal hover:bg-white transition-colors active:translate-y-1 active:translate-x-1 active:shadow-none">
                     <span className="material-icons-round">create_new_folder</span> Create Folder
                 </button>
-                <button onClick={() => { setInputValue(''); setSelectedFile(null); setPriceValue('499'); setDiscountEnabled(false); setDiscountPercent('0'); setIsFileModalOpen(true); }} className="min-w-[220px] px-6 py-3 bg-accent-blue text-black border-2 border-black font-black capitalize tracking-widest text-sm flex items-center justify-center gap-2 shadow-brutal hover:bg-white transition-colors active:translate-y-1 active:translate-x-1 active:shadow-none">
+                <button onClick={() => { setInputValue(''); setSelectedFile(null); setPriceValue('499'); setDiscountEnabled(false); setDiscountPercent('0'); setUploadProgress(0); setIsFileModalOpen(true); }} className="min-w-[220px] px-6 py-3 bg-accent-blue text-black border-2 border-black font-black capitalize tracking-widest text-sm flex items-center justify-center gap-2 shadow-brutal hover:bg-white transition-colors active:translate-y-1 active:translate-x-1 active:shadow-none">
                     <span className="material-icons-round">upload_file</span> Upload Note PDF
                 </button>
             </div>
@@ -392,9 +409,20 @@ export default function AdminDashboard() {
                                 <p className="text-xs font-bold capitalize tracking-widest">Final Price Preview</p>
                                 <p className="text-lg font-black">₹{computeFinalPrice(priceValue, discountEnabled, discountPercent)}</p>
                             </div>
+                            {isUploading && (
+                                <div className="mb-6 p-3 border-2 border-black bg-blue-50">
+                                    <p className="text-xs font-bold capitalize tracking-widest mb-2">Upload Progress</p>
+                                    <div className="w-full h-3 border-2 border-black bg-white">
+                                        <div className="h-full bg-accent-blue transition-all" style={{ width: `${uploadProgress}%` }} />
+                                    </div>
+                                    <p className="text-xs font-black mt-2">{uploadProgress}%</p>
+                                </div>
+                            )}
                             <div className="flex gap-4 justify-end pt-2">
-                                <button type="button" onClick={() => setIsFileModalOpen(false)} className="px-6 py-3 bg-gray-200 text-black border-2 border-black font-bold capitalize tracking-widest hover:bg-gray-300 transition-colors active:translate-y-1 active:translate-x-1">Cancel</button>
-                                <button type="submit" className="px-6 py-3 bg-accent-blue text-black border-2 border-black font-bold capitalize tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-white transition-colors active:translate-y-1 active:translate-x-1 active:shadow-none">Upload</button>
+                                <button type="button" disabled={isUploading} onClick={() => setIsFileModalOpen(false)} className="px-6 py-3 bg-gray-200 text-black border-2 border-black font-bold capitalize tracking-widest hover:bg-gray-300 transition-colors active:translate-y-1 active:translate-x-1 disabled:opacity-60 disabled:cursor-not-allowed">Cancel</button>
+                                <button type="submit" disabled={isUploading} className="px-6 py-3 bg-accent-blue text-black border-2 border-black font-bold capitalize tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-white transition-colors active:translate-y-1 active:translate-x-1 active:shadow-none disabled:opacity-60 disabled:cursor-not-allowed">
+                                    {isUploading ? `Uploading ${uploadProgress}%` : 'Upload'}
+                                </button>
                             </div>
                         </form>
                     </div>

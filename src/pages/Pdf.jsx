@@ -93,7 +93,7 @@ export default function Pdf() {
                 key: order.key_id,
                 amount: order.amount,
                 currency: order.currency,
-                name: 'Notes App',
+                name: 'Notes',
                 description: `Unlock ${order.itemName}`,
                 order_id: order.order_id,
                 handler: async (response) => {

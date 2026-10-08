@@ -15,6 +15,15 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat-square&logo=framer&logoColor=white)
 
+## Screenshots
+
+<p align="center">
+  <img src="./screenshot-ui.png" alt="Notes UI" width="100%" />
+  <br />
+  <em>Study-notes marketplace — hero, stats, how it works.</em>
+</p>
+
+
 ## What it is
 
 A study-notes marketplace web app: students browse, preview, and purchase class notes; creators upload notes and manage their library; admins get a dashboard for users, purchases, and content. The frontend is React + Vite with Tailwind and Framer Motion animations, Google OAuth login, and a PDF viewer for reading notes in the browser. It talks to the [`notes_backend`](../notes_backend) Django REST API (`http://127.0.0.1:8000/api` by default, overridable via `VITE_API_BASE_URL`).
